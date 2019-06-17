@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html class="x-admin-sm">
 <head>
 <meta charset="UTF-8">
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -47,7 +47,7 @@
             </ul>
             <ul class="layui-nav right" lay-filter="">
                 <li class="layui-nav-item">
-                    <a href="javascript:;">admin</a>
+                    <a href="javascript:;">${username}</a> 
                     <dl class="layui-nav-child">
                         <!-- 二级菜单 -->
                         <dd>
@@ -116,14 +116,14 @@
                     </li>
                     <li>
                         <a href="javascript:;">
-                            <i class="iconfont left-nav-li" lay-tips="订单管理">&#xe723;</i>
-                            <cite>订单管理</cite>
+                            <i class="iconfont left-nav-li" lay-tips="参赛人员管理">&#xe723;</i>
+                            <cite>参赛人员管理</cite>
                             <i class="iconfont nav_right">&#xe697;</i></a>
                         <ul class="sub-menu">
                             <li>
-                                <a onclick="xadmin.add_tab('订单列表','order-list.html')">
+                                <a onclick="xadmin.add_tab('参赛人员列表','${pageContext.request.contextPath}/manager/participant_list')">
                                     <i class="iconfont">&#xe6a7;</i>
-                                    <cite>订单列表</cite></a>
+                                    <cite>参赛人员列表</cite></a>
                             </li>
                             <li>
                                 <a onclick="xadmin.add_tab('订单列表1','order-list1.html')">

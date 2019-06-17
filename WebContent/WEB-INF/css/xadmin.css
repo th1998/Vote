@@ -3,6 +3,7 @@
 *{
     margin: 0px;
     padding: 0px;
+    font-size:12px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 a{
@@ -18,6 +19,7 @@ body{
     width: 100%;
     min-height: 100%;
     background: #f1f1f1;
+    font-size:12px;
     /*background: #fff;*/
 }
 .x-red{
@@ -353,9 +355,7 @@ body{
     color:#888
 }
 
-.layui-table td, .layui-table th{
-    min-width: 80px;
-}
+
 
 table th, table td {
     word-break: break-all;
@@ -451,6 +451,7 @@ table th, table td {
 .x-admin-sm body{
     font-size: 12px;
 }
+
 /*登录页面样式*/
 .x-admin-sm .login input[type=submit],.x-admin-sm .login input[type=button]{
     font-size: 14px;
