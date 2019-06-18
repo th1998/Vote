@@ -86,8 +86,7 @@
                         <div class="layui-card-header">
                             <button class="layui-btn layui-btn-danger" onclick="delAll()">
                                 <i class="layui-icon"></i>批量删除</button>
-                            <button class="layui-btn" onclick="xadmin.open('添加用户','./order-add.html',800,600)">
-                                <i class="layui-icon"></i>添加</button></div>
+						</div>
                         <div class="layui-card-body ">
                             <table class="layui-table layui-form">
                                 <thead>
@@ -114,20 +113,19 @@
 										<th id="sex${status.index}">${item.sex }</th>
 										<th id="introduce${status.index}">${item.introduce }</th>	
 										<th id="picture${status.index}" >
-											<c:if test='${item.picture==null }'>
+											<c:if test='${item.picture=="" }'>
 												<button type="button" class="layui-btn layui-btn-sm layui-btn-danger" style=" margin-left:26%;">无</button> 
 											</c:if>
-											<c:if test='${item.picture!=null }'>
+											<c:if test='${item.picture!="" }'>
 												<button type="button" class="layui-btn layui-btn-sm" style=" margin-left:26%;">有</button> 
 											</c:if>
 										
 										</th>
 										<th class="td-manage">
-											 <button type="button" class="layui-btn" id="test1">
-											   <i class="layui-icon">&#xe67c;</i>上传图片
-											 </button>
-	                                         <a title="查看" onclick="xadmin.open('编辑','order-view.html')" href="javascript:;">
-	                                            <i class="layui-icon">&#xe63c;</i></a>
+											 <a title="上传"  href="javascript:;" id="test1">
+	                                            <i class="layui-icon">&#xe67c;</i></a>
+	                                         <a title="编辑" id="bj${status.index}" onclick="xadmin.open('编辑','${pageContext.request.contextPath}/manager/participant_update?id=${item.id }')" href="javascript:;">
+	                                            <i class="layui-icon">&#xe642;</i></a>
 	                                         <a title="删除" onclick="del('${item.id}')" href="javascript:;" id="a${status.index}">
 	                                            <i class="layui-icon">&#xe640;</i></a>
                                         </th>
@@ -171,13 +169,13 @@
 		        		$("#sex"+i).html(data.con[i].sex);
 		        		$("#introduce"+i).html(data.con[i].introduce);
 	
-		        		if(data.con[i].picture==null){
+		        		if(data.con[i].picture==""){
 		        			$("#picture"+i).html('<button type="button" class="layui-btn layui-btn-sm layui-btn-danger" style=" margin-left:26%;">无</button>');
 		        		}else{
 		        			$("#picture"+i).html('<button type="button" class="layui-btn layui-btn-sm" style=" margin-left:26%;">有</button>');
 		        		}
 		        		$('#a'+i).attr('onclick',"del("+data.con[i].id+")");
-		        		
+		        		$('#bj'+i).attr('onclick',"xadmin.open('编辑','${pageContext.request.contextPath}/manager/participant_update?id="+data.con[i].id+"')");
 		        		for(var j = 0;j<=4;j++){
 		    				var index=$("table").find("tbody").find("tr").eq(j).index();
 		 	    			
@@ -193,12 +191,13 @@
 		        		$("#name"+i).html(data.con[i].name);
 		        		$("#sex"+i).html(data.con[i].sex);
 		        		$("#introduce"+i).html(data.con[i].introduce);
-		        		if(data.con[i].picture==null){
+		        		if(data.con[i].picture==""){
 		        			$("#picture"+i).html('<button type="button" class="layui-btn layui-btn-sm layui-btn-danger" style=" margin-left:26%;">无</button>');
 		        		}else{
 		        			$("#picture"+i).html('<button type="button" class="layui-btn layui-btn-sm" style=" margin-left:26%;">有</button>');
 		        		}
 		        		$('#a'+i).attr('onclick',"del("+data.con[i].id+")");
+		        		$('#bj'+i).attr('onclick',"xadmin.open('编辑','${pageContext.request.contextPath}/manager/participant_update?id="+data.con[i].id+"')");
     				}
     			}
     		});

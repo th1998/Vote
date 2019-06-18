@@ -15,7 +15,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from contestants
 	</select>
 	
+	<!-- 删除参赛者 -->
 	<delete id="delPlayer" parameterType="int">
 		delete from contestants where id = #{id}
 	</delete>
+	
+	<!-- 修改查询参赛者 -->
+	<select id="findPlayer" parameterType="Model.Contestants" resultType="Model.Contestants">
+		select * from contestants where id = #{id}
+	</select>
 </mapper>

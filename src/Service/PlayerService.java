@@ -39,4 +39,8 @@ public class PlayerService {
 	public int delPlayer(Integer id) {
 		return playerDao.delPlayer(id);
 	}
+	
+	public Contestants findPlayer(Integer id) {
+		return playerDao.findPlayer(id);
+	}
 }

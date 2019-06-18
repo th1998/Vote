@@ -53,6 +53,18 @@ public class BackstageController {
 		ModelAndView mv = new ModelAndView("/participants_entry");
 		return mv;
 	} 
+	
+	/*
+	 * 参赛人员编辑页面
+	 */
+	@RequestMapping("/participant_update")
+	public ModelAndView findPlayer(Integer id) {
+		Contestants c = playerService.findPlayer(id);
+		ModelAndView mv=new ModelAndView("/participant_update");
+		mv.addObject("c", c);
+		return mv;
+	}
+	
 	/*
 	 * 参赛人员列表页面
 	 */
@@ -95,6 +107,9 @@ public class BackstageController {
 		
 	}
 	
+	/*
+	 * 参赛人员删除请求
+	 */
 	@RequestMapping("/del_submit")
 	@ResponseBody
 	public ResultMsg delPlayer(Integer id) {
