@@ -120,15 +120,15 @@
                             <cite>参赛人员管理</cite>
                             <i class="iconfont nav_right">&#xe697;</i></a>
                         <ul class="sub-menu">
+                        	<li>
+                                <a onclick="xadmin.add_tab('参赛选手录入','${pageContext.request.contextPath}/manager/participants_entry')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>参赛选手录入</cite></a>
+                            </li>
                             <li>
                                 <a onclick="xadmin.add_tab('参赛人员列表','${pageContext.request.contextPath}/manager/participant_list')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>参赛人员列表</cite></a>
-                            </li>
-                            <li>
-                                <a onclick="xadmin.add_tab('订单列表1','order-list1.html')">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>订单列表1</cite></a>
                             </li>
                         </ul>
                     </li>

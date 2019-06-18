@@ -90,7 +90,7 @@ body{
 .container{
     width: 100%;
     height: 45px;
-    background-color: #222;
+    background: linear-gradient(to left,rgba(1, 170, 237, 1), rgba(82, 183, 109, 1)) !important;
 }
 .container a,.layui-nav .layui-nav-item a{
     color: #fff;

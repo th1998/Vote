@@ -14,7 +14,7 @@
 <script src="${pageContext.request.contextPath}/js/jquery-3.4.0.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/lib/layui/layui.js" charset="utf-8"></script>
-<title>Insert title here</title>
+<title>登录</title>
 </head>
 <body class="login-bg">
     
