@@ -4,8 +4,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Dao.PlayerDao">
+	<!-- 添加参赛者 -->
 	<insert id="addPlayer" parameterType="Model.Contestants">
 		insert into contestants (con_id,name,sex,introduce) 
 		values (#{con_id},#{name},#{sex},#{introduce})
 	</insert>
+	
+	<!-- 查询参赛者 -->
+	<select id="getPlayer" parameterType="Model.Contestants" resultType="Model.Contestants">
+		select * from contestants
+	</select>
+	
+	<delete id="delPlayer" parameterType="int">
+		delete from contestants where id = #{id}
+	</delete>
 </mapper>
