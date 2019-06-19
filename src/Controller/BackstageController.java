@@ -64,6 +64,14 @@ public class BackstageController {
 		mv.addObject("c", c);
 		return mv;
 	}
+	/*
+	 * pk选手录入页面
+	 */
+	@RequestMapping("/pk_entry")
+	public ModelAndView findPlayer() {
+		ModelAndView mv=new ModelAndView("/pk_entry");
+		return mv;
+	}
 	
 	/*
 	 * 参赛人员列表页面
@@ -139,12 +147,12 @@ public class BackstageController {
 			File f = new File(path);
 			//将上传的文件传输到File中
 			file.transferTo(f);
-
-			String s = "{'filename':'"+filename+"'}";
+			
+			
 			//跳转成功页面
 			System.out.println(filename);
 			
-			return s;
+			return filename;
 		}
 	
 }

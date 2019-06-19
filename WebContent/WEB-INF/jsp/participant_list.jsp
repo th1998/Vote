@@ -131,7 +131,7 @@
                                         </th>
 									</tr>
 								 </c:forEach>
-                              
+                             
                                 </tbody>
                             </table>
                         </div>
@@ -160,10 +160,38 @@
         totalList: total, // 记录总数量
         callback: function (num) { //回调函数
         	var url="${pageContext.request.contextPath}/manager/participant_list2?pageSize="+num;
+        	var tr = "";
     		$.get(url,function(data){
-    			
-    			if(page == num){
+    			for(var i = 0;data.con.length;i++){
+	    			tr += "<tr>";
+	    			tr += "<th><input type='checkbox' name='' lay-skin='primary'></th>";
+	    			tr += "<th id='con_id'"+i+">"+data.con[i].con_id+"</th>";
+	    			tr += "<th id='name'"+i+">"+data.con[i].name+"</th>";
+	    			tr += "<th id='sex'"+i+">"+data.con[i].sex+"</th>";
+	    			tr += "<th id='introduce'"+i+">"+data.con[i].introduce+"</th>";
+	    			if(data.con[i].picture==""){
+	    				tr += "<th id='picture'"+i+"><button type='button' class='layui-btn layui-btn-sm layui-btn-danger' style=' margin-left:26%;'>无</button></th>";
+	    			}else{
+	    				tr += "<th id='picture'"+i+"><button type='button' class='layui-btn layui-btn-sm layui-btn-danger' style=' margin-left:26%;'>有</button></th>";
+	    			}
+	    			
+	    			tr += '<th class="td-manage">'+
+	    					'<a title="上传"  href="javascript:;" id="test1"> '+
+	    						'<i class="layui-icon">&#xe67c;</i>'+
+	    					'</a>'+
+	    					'<a title="编辑" id="bj'+i+'" onclick=\'xadmin.open(\"编辑\",\"${pageContext.request.contextPath}/manager/participant_update?id='+data.con[i].id+'\")\' href="javascript:;">'+
+	    						'<i class="layui-icon">&#xe642;</i>'+
+	    					'</a>'+
+	    					'<a title="删除" onclick="del('+data.con[i].id+')" href="javascript:;" id="a'+i+'">'+
+	    						'<i class="layui-icon">&#xe640;</i>'+
+	    					'</a>'+
+	    			      '</th>';
+	            
+	    			layui.jquery("tbody").html(tr);
+    			}
+    		/*	if(page == num){
 	    			for(var i = 0;data.con.length;i++){
+	    				
 		    			$("#con_id"+i).html(data.con[i].con_id);
 		        		$("#name"+i).html(data.con[i].name);
 		        		$("#sex"+i).html(data.con[i].sex);
@@ -176,10 +204,6 @@
 		        		}
 		        		$('#a'+i).attr('onclick',"del("+data.con[i].id+")");
 		        		$('#bj'+i).attr('onclick',"xadmin.open('编辑','${pageContext.request.contextPath}/manager/participant_update?id="+data.con[i].id+"')");
-		        		for(var j = 0;j<=4;j++){
-		    				var index=$("table").find("tbody").find("tr").eq(j).index();
-		 	    			
-		    			}
 		        	
 	    			}
     			}else{
@@ -199,7 +223,7 @@
 		        		$('#a'+i).attr('onclick',"del("+data.con[i].id+")");
 		        		$('#bj'+i).attr('onclick',"xadmin.open('编辑','${pageContext.request.contextPath}/manager/participant_update?id="+data.con[i].id+"')");
     				}
-    			}
+    			}*/
     		});
         }
     });
@@ -231,7 +255,7 @@
 </script>
     <script>
     function del(id){
-
+		alert(id)
     	var result=confirm("你确定要删除该参赛者吗？");
     	if(result){
     		var url="${pageContext.request.contextPath}/manager/del_submit";
