@@ -138,6 +138,11 @@
                             <cite>PK管理</cite>
                             <i class="iconfont nav_right">&#xe697;</i></a>
                         <ul class="sub-menu">
+                        	<li>
+                                <a onclick="xadmin.add_tab('比赛信息录入','${pageContext.request.contextPath}/manager/competition_entry')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>比赛信息录入</cite></a>
+                            </li>
                             <li>
                                 <a onclick="xadmin.add_tab('PK选手录入','${pageContext.request.contextPath}/manager/pk_entry')">
                                     <i class="iconfont">&#xe6a7;</i>

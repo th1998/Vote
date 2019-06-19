@@ -2,8 +2,7 @@ package Controller;
 
 import java.io.File;
 import java.io.IOException;
-
-
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,10 +15,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.github.pagehelper.PageInfo;
 
+import Model.Competition;
 import Model.Contestants;
 
 
 import Model.ResultMsg;
+import Service.CompetitionService;
 import Service.PlayerService;
 import Model.PageResult;
 
@@ -28,6 +29,9 @@ import Model.PageResult;
 public class BackstageController {
 	@Autowired
 	private PlayerService playerService;
+	
+	@Autowired
+	private CompetitionService competitionService;
 	/*
 	 * 后台主页面
 	 */
@@ -65,11 +69,51 @@ public class BackstageController {
 		return mv;
 	}
 	/*
+	 * 比赛信息录入页面
+	 */
+	@RequestMapping("/competition_entry")
+	public ModelAndView competition_entry() {
+		ModelAndView mv=new ModelAndView("/competition_entry");
+		return mv;
+	}
+	@RequestMapping("/competition_entry_submit")
+	@ResponseBody
+	public ResultMsg competition_entry_submit(HttpServletRequest request,Competition com){
+		Competition competition = new Competition();
+		competition.setCompetition_name(com.getCompetition_name());
+		competition.setCompetition_status(com.getCompetition_status());
+		competition.setVote_type(com.getVote_type());
+		competition.setVote_start(com.getVote_start());
+		competition.setVote_end(com.getVote_end());
+		int i = competitionService.addCompetition(competition);
+		if(i>0) {
+			return new ResultMsg(1, "比赛信息录入成功");
+		}else {
+			return new ResultMsg(2, "比赛信息录入失败");
+		}
+		
+	}
+	
+	/*
 	 * pk选手录入页面
 	 */
 	@RequestMapping("/pk_entry")
 	public ModelAndView findPlayer() {
+		List<Competition> comid = competitionService.getID();//查询比赛主题id
+		List<Contestants> conid = competitionService.getPlayerID();//查询参赛选手编号
 		ModelAndView mv=new ModelAndView("/pk_entry");
+		mv.addObject("comid", comid);
+		mv.addObject("conid",conid);
+		return mv;
+	}
+	
+	@RequestMapping("/findplayname")
+	public ModelAndView findPlayername(Integer id) {
+		System.out.println(id);
+		Contestants cname = competitionService.findPlayername(id);
+		System.out.println(cname.getName());
+		ModelAndView mv=new ModelAndView("/pk_entry");
+		mv.addObject("cname",cname);
 		return mv;
 	}
 	

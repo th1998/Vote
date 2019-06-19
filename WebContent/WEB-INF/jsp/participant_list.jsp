@@ -189,41 +189,7 @@
 	            
 	    			layui.jquery("tbody").html(tr);
     			}
-    		/*	if(page == num){
-	    			for(var i = 0;data.con.length;i++){
-	    				
-		    			$("#con_id"+i).html(data.con[i].con_id);
-		        		$("#name"+i).html(data.con[i].name);
-		        		$("#sex"+i).html(data.con[i].sex);
-		        		$("#introduce"+i).html(data.con[i].introduce);
-	
-		        		if(data.con[i].picture==""){
-		        			$("#picture"+i).html('<button type="button" class="layui-btn layui-btn-sm layui-btn-danger" style=" margin-left:26%;">无</button>');
-		        		}else{
-		        			$("#picture"+i).html('<button type="button" class="layui-btn layui-btn-sm" style=" margin-left:26%;">有</button>');
-		        		}
-		        		$('#a'+i).attr('onclick',"del("+data.con[i].id+")");
-		        		$('#bj'+i).attr('onclick',"xadmin.open('编辑','${pageContext.request.contextPath}/manager/participant_update?id="+data.con[i].id+"')");
-		        	
-	    			}
-    			}else{
-    				for(var i = 0;data.con.length;i++){
-    					for(var k = 0;k<=5;k++){
-	    					$("table").find("tr").eq(k).attr("style","visibility:visible ;")
-	    				}
-		    			$("#con_id"+i).html(data.con[i].con_id);
-		        		$("#name"+i).html(data.con[i].name);
-		        		$("#sex"+i).html(data.con[i].sex);
-		        		$("#introduce"+i).html(data.con[i].introduce);
-		        		if(data.con[i].picture==""){
-		        			$("#picture"+i).html('<button type="button" class="layui-btn layui-btn-sm layui-btn-danger" style=" margin-left:26%;">无</button>');
-		        		}else{
-		        			$("#picture"+i).html('<button type="button" class="layui-btn layui-btn-sm" style=" margin-left:26%;">有</button>');
-		        		}
-		        		$('#a'+i).attr('onclick',"del("+data.con[i].id+")");
-		        		$('#bj'+i).attr('onclick',"xadmin.open('编辑','${pageContext.request.contextPath}/manager/participant_update?id="+data.con[i].id+"')");
-    				}
-    			}*/
+    		
     		});
         }
     });

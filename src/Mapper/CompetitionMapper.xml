@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Dao.CompetitionDao">
+	<insert id="addCompetition" parameterType="Model.Competition">
+		insert into competition(competition_name,competition_status,vote_type,vote_start,vote_end)
+		values(#{competition_name},#{competition_status},#{vote_type},#{vote_start},#{vote_end})
+	</insert>
+	
+	<select id="getID" resultType="Model.Competition">
+		select * from competition
+	</select>
+	
+	<select id="getPlayerID" resultType="Model.Contestants">
+		select * from contestants
+	</select>
+	
+	<select id="findPlayer" parameterType="Model.Contestants" resultType="Model.Contestants">
+		select * from contestants where id = #{id}
+	</select>
+</mapper>
