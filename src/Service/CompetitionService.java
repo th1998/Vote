@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import Dao.CompetitionDao;
 import Model.Competition;
+import Model.Con_pk;
 import Model.Contestants;
 @Service
 public class CompetitionService {
@@ -25,7 +26,11 @@ public class CompetitionService {
 		return competitionDao.getPlayerID();
 	}
 	
-	public Contestants findPlayername(Integer id) {
-		return competitionDao.findPlayer(id);
+	public int addConpk(Con_pk pk) {
+		return competitionDao.addConpk(pk);
+	}
+	
+	public List<Con_pk> getPk(){
+		return competitionDao.getPk();
 	}
 }

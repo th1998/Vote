@@ -148,6 +148,11 @@
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>PK选手录入</cite></a>
                             </li>
+                            <li>
+                                <a onclick="xadmin.add_tab('PK信息列表','${pageContext.request.contextPath}/manager/pk_information')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>PK信息列表</cite></a>
+                            </li>
                         </ul>
                     </li>
                     <li>

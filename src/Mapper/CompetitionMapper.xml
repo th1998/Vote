@@ -17,7 +17,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from contestants
 	</select>
 	
-	<select id="findPlayer" parameterType="Model.Contestants" resultType="Model.Contestants">
-		select * from contestants where id = #{id}
+	<insert id="addConpk" parameterType="Model.Con_pk">
+		insert into con_pk(competition_id,con1_name,con1_id,con1_music,con2_name,con2_id,con2_music)
+		values(#{competition_id},#{con1_name},#{con1_id},#{con1_music},#{con2_name},#{con2_id},#{con2_music})
+	</insert>
+	
+	<resultMap id="conpk" type="Model.Con_pk">
+		<id property="id" column="id"/>
+		<result property="competition_id" column="competition_id"/>
+		<result property="con1_name" column="con1_name"/>
+		<result property="con1_id" column="con1_id"/>
+		<result property="con1_music" column="con1_music"/>
+		<result property="con1_score" column="con1_score"/>
+		<result property="con2_name" column="con2_name"/>
+		<result property="con2_id" column="con2_id"/>
+		<result property="con2_music" column="con2_music"/>
+		<result property="con2_score" column="con2_score"/>
+		<association property="comp" javaType="Model.Competition">
+			<id property="id" column="id"/> 
+			<result property="competition_name" column="competition_name"/>
+			<result property="competition_status" column="competition_status"/>
+			<result property="vote_type" column="vote_type"/>
+			<result property="vote_start" column="vote_start"/>
+			<result property="vote_end" column="vote_end"/>
+		</association>
+	</resultMap>
+	<select id="getPk" resultMap="conpk">
+		select * from con_pk pk,competition com where pk.competition_id = com.id
 	</select>
+	
 </mapper>

@@ -34,7 +34,7 @@
         /*button禁用*/
         .page_div button:disabled{opacity:.5;cursor:no-drop}
     </style>
-<title>参赛人员列表</title>
+<title>pk信息列表</title>
 </head>
 <body>
         <div class="x-nav">
@@ -94,41 +94,50 @@
                                         <th width="2%">
                                             <input type="checkbox"  lay-skin="primary">
                                         </th>
-                                        <th width="12%">选手编号</th>
-                                        <th width="10%">姓名</th>
-                                        <th width="5%">性别</th>
-                                        <th width="50%">选手简介</th>
-                                        <th width="10%">照片</th>
-                                        <th width="11%">操作</th>
+                                        <th width="8%">比赛主题</th>
+                                        <th width="8%">姓名①</th>
+                                        <th width="10%">歌曲①</th>
+                                        <th width="8%">票数①</th>
+                                        <th width="8%">姓名②</th>
+                                        <th width="10%">歌曲②</th>
+                                        <th width="8%">票数②</th>
+                                        <th width="5%">状态</th>
+                                        <th width="5%">类型</th>
+                                        <th width="14%">开启时间</th>
+                                        <th width="14%">关闭时间</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${contestants.list}" var="item" varStatus="status">
+                                <c:forEach items="${pklist}" var="item">
 									<tr>
 										<th>
-	                                        <input type="checkbox" name="" lay-skin="primary">
-	                                    </th>
-										<th id="con_id${status.index}">${item.con_id }</th>
-										<th id="name${status.index}">${item.name }</th>
-										<th id="sex${status.index}">${item.sex }</th>
-										<th id="introduce${status.index}">${item.introduce }</th>	
-										<th id="picture${status.index}" >
-											<c:if test='${item.picture=="" }'>
-												<button type="button" class="layui-btn layui-btn-sm layui-btn-danger" style=" margin-left:26%;">无</button> 
-											</c:if>
-											<c:if test='${item.picture!="" }'>
-												<button type="button" class="layui-btn layui-btn-sm" style=" margin-left:26%;">有</button> 
-											</c:if>
-										
-										</th>
-										<th class="td-manage">
-											 <a title="上传"  href="javascript:;" id="test1">
-	                                            <i class="layui-icon">&#xe67c;</i></a>
-	                                         <a title="编辑" id="bj${status.index}" onclick="xadmin.open('编辑','${pageContext.request.contextPath}/manager/participant_update?id=${item.id }')" href="javascript:;">
-	                                            <i class="layui-icon">&#xe642;</i></a>
-	                                         <a title="删除" onclick="del('${item.id}')" href="javascript:;" id="a${status.index}">
-	                                            <i class="layui-icon">&#xe640;</i></a>
+                                            <input type="checkbox"  lay-skin="primary">
                                         </th>
+                                        <th>${item.comp.competition_name}</th>
+                                        <th>${item.con1_name}</th>
+                                        <th>${item.con1_music}</th>
+                                        <th>${item.con1_score}</th>
+                                        <th>${item.con2_name}</th>
+                                        <th>${item.con2_music}</th>
+                                        <th>${item.con2_score}</th>
+                                        <th>
+                                        	<c:if test="${item.comp.competition_status ==1}">
+												开启
+											</c:if>
+											<c:if test="${item.comp.competition_status==0}">
+												关闭
+											</c:if>
+                                        </th>
+                                        <th>
+                                        	<c:if test="${item.comp.vote_type ==1}">
+												正选
+											</c:if>
+											<c:if test="${item.comp.vote_type==0}">
+												反选
+											</c:if>
+                                        </th>
+                                        <th>${item.comp.vote_start}</th>
+                                        <th>${item.comp.vote_end}</th>
 									</tr>
 								 </c:forEach>
                              
@@ -214,32 +223,27 @@
 	  });
 	});
 	
-	
-        function del(id){
-        	var result =false;
-        	layui.use(['laydate','form'], function(){
-                var laydate = layui.laydate;
-                var  form = layui.form;
-                
-                layer.confirm('是否删除该参赛者', {icon: 6,timeout:5000},function(index){
-                	var url="${pageContext.request.contextPath}/manager/del_submit";
-            		var param={id:id};
-            		$.get(url,param,function(data){
-            			layer.alert(data.content);
-            			if(data.flag == 1){
-            				location.reload();
-            			}
-            		});
-                });
-        	});
-        	
-
-        	
-        }
-	
+	layui.use(['laydate','form'], function(){
+        var laydate = layui.laydate;
+        var  form = layui.form;
+	});
 </script>
     <script>
-    
+    function del(id){
+		alert(id)
+    	var result=confirm("你确定要删除该参赛者吗？");
+    	if(result){
+    		var url="${pageContext.request.contextPath}/manager/del_submit";
+    		var param={id:id};
+    		$.get(url,param,function(data){
+    			alert(data.content);
+    			if(data.flag == 1){
+    				location.reload();
+    			}
+    		});
+    	}
+    	
+    }
     
     </script>
 </html>

@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.github.pagehelper.PageInfo;
 
 import Model.Competition;
+import Model.Con_pk;
 import Model.Contestants;
 
 
@@ -106,14 +107,37 @@ public class BackstageController {
 		mv.addObject("conid",conid);
 		return mv;
 	}
+	@RequestMapping("/pk_information_submit")
+	@ResponseBody
+	public ResultMsg addconpk_submit(HttpServletRequest request,Con_pk con_pk) {
+		Con_pk pk = new Con_pk();
+		pk.setCompetition_id(con_pk.getCompetition_id());
+		pk.setCon1_id(con_pk.getCon1_id());
+		pk.setCon1_music(con_pk.getCon1_music());
+		pk.setCon1_name(con_pk.getCon1_name());
+		pk.setCon1_score(con_pk.getCon1_score());
+		pk.setCon2_id(con_pk.getCon2_id());
+		pk.setCon2_music(con_pk.getCon2_music());
+		pk.setCon2_name(con_pk.getCon2_name());
+		pk.setCon2_score(con_pk.getCon2_score());
+		
+		int i = competitionService.addConpk(pk);
+		if(i>0) {
+			return new ResultMsg(1,"pk信息录入成功");
+		}else {
+			return new ResultMsg(0,"pk信息录入失败");
+		}
+	}
+	/*
+	 * pk信息列表页面
+	 */
 	
-	@RequestMapping("/findplayname")
-	public ModelAndView findPlayername(Integer id) {
-		System.out.println(id);
-		Contestants cname = competitionService.findPlayername(id);
-		System.out.println(cname.getName());
-		ModelAndView mv=new ModelAndView("/pk_entry");
-		mv.addObject("cname",cname);
+	
+	@RequestMapping("/pk_information")
+	public ModelAndView pk_information_submit(){
+		List<Con_pk> pklist = competitionService.getPk();
+		ModelAndView mv=new ModelAndView("/pk_information");
+		mv.addObject("pklist",pklist);
 		return mv;
 	}
 	
