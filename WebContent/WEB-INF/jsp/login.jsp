@@ -19,7 +19,7 @@
 <body class="login-bg">
     
     <div class="login layui-anim layui-anim-up">
-        <div class="message">x-admin2.0-管理登录</div>
+        <div class="message">投票系统登录</div>
         <div id="darkbannerwrap"></div>
         
         <form method="post" class="layui-form" action= "${pageContext.request.contextPath}/login_submit">
@@ -44,7 +44,6 @@
      				var url = '${pageContext.request.contextPath}/login_submit';
                 	var param = $(".layui-form").serialize();
                 	$.post(url, param, function (data) {
-
                         if(data.flag == 1){
                         	location.href='${pageContext.request.contextPath}/manager/index';
                         }else{

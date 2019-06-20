@@ -219,8 +219,25 @@ public class BackstageController {
 			return new ResultMsg(0,"修改失败");
 		}
 	}
-	
-	
+	/*
+	 * 修改参赛者信息
+	 */
+	@RequestMapping("/updatePlayer_submit")
+	@ResponseBody
+	public ResultMsg update_submit(Contestants c){
+		Contestants contestants = new Contestants();
+		
+		contestants.setCon_id(c.getCon_id());
+		contestants.setName(c.getName());
+		contestants.setSex(c.getSex());
+		contestants.setIntroduce(c.getIntroduce());
+		int i = playerService.updatePlayer(contestants);
+		if(i>0){
+			return new ResultMsg(1,"修改参赛信息成功");
+		}else{
+			return new ResultMsg(0,"修改参赛信息失败");
+		}
+	}
 	
 		/*
 		 * 上传图片

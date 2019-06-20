@@ -9,4 +9,5 @@ public interface PlayerDao {
 	List<Contestants> getPlayer();//查询参赛者
 	int delPlayer(Integer id);//删除参赛者
 	Contestants findPlayer(Integer id);//查询修改的参赛者
+	int updatePlayer(Contestants contestants);//修改参赛者信息
 }

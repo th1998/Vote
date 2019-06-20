@@ -80,16 +80,13 @@ layui.use(['form','layer'], function(){
 	 });
   //异步提交表单
   form.on('submit(entry)', function(data){
-     var url = '${pageContext.request.contextPath}/manager/addPlayer_submit';
+     var url = '${pageContext.request.contextPath}/manager/updatePlayer_submit';
      var param = $(".layui-form").serialize();
-	
-     $.post(url, param, function (data) {
-        if(data.flag == 1){
-        	layer.msg(data.content, {icon: 1});
-			$(".layui-input").val("");
-			$("#introduce").val("");
+     $.post(url, param, function (res) {
+        if(res.flag == 1){
+        	layer.msg(res.content, {icon: 1});
         }else{
-        	layer.alert(data.content, {icon: 2});
+        	layer.alert(res.content, {icon: 2});
         }
          
      });

@@ -43,4 +43,8 @@ public class PlayerService {
 	public Contestants findPlayer(Integer id) {
 		return playerDao.findPlayer(id);
 	}
+	
+	public int updatePlayer(Contestants contestants) {
+		return playerDao.updatePlayer(contestants);
+	}
 }
