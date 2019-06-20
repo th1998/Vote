@@ -46,4 +46,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from con_pk pk,competition com where pk.competition_id = com.id
 	</select>
 	
+	
+	<update id="updateStatus" parameterType="Model.Competition">
+		update competition
+		set competition_status = #{competition_status}
+		where id=#{id}
+	</update>
 </mapper>

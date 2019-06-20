@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
 import Dao.CompetitionDao;
 import Model.Competition;
 import Model.Con_pk;
@@ -29,8 +32,22 @@ public class CompetitionService {
 	public int addConpk(Con_pk pk) {
 		return competitionDao.addConpk(pk);
 	}
+	//联合查询 pk信息
+	public PageInfo<Con_pk> getPk(){
+		PageHelper.startPage(1, 8);
+		List<Con_pk> l = competitionDao.getPk();
+		PageInfo<Con_pk> page = new PageInfo<>(l);
+		return page;
+	}
 	
-	public List<Con_pk> getPk(){
-		return competitionDao.getPk();
+	public PageInfo<Con_pk> getPk(Integer pageSize){
+		PageHelper.startPage(pageSize, 8);
+		List<Con_pk> l = competitionDao.getPk();
+		PageInfo<Con_pk> page = new PageInfo<>(l);
+		return page;
+	}
+	
+	public int updateStatus(Competition competition){
+		return competitionDao.updateStatus(competition);
 	}
 }

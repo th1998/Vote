@@ -53,41 +53,16 @@
                 <div class="layui-col-md12">
                     <div class="layui-card">
                         <div class="layui-card-body ">
-                            <form class="layui-form layui-col-space5">
-                                <div class="layui-input-inline layui-show-xs-block">
-                                    <input class="layui-input" placeholder="开始日" name="start" id="start"></div>
-                                <div class="layui-input-inline layui-show-xs-block">
-                                    <input class="layui-input" placeholder="截止日" name="end" id="end"></div>
-                                <div class="layui-input-inline layui-show-xs-block">
-                                    <select name="contrller">
-                                        <option>支付方式</option>
-                                        <option>支付宝</option>
-                                        <option>微信</option>
-                                        <option>货到付款</option></select>
-                                </div>
-                                <div class="layui-input-inline layui-show-xs-block">
-                                    <select name="contrller">
-                                        <option value="">订单状态</option>
-                                        <option value="0">待确认</option>
-                                        <option value="1">已确认</option>
-                                        <option value="2">已收货</option>
-                                        <option value="3">已取消</option>
-                                        <option value="4">已完成</option>
-                                        <option value="5">已作废</option></select>
-                                </div>
-                                <div class="layui-input-inline layui-show-xs-block">
-                                    <input type="text" name="username" placeholder="请输入订单号" autocomplete="off" class="layui-input"></div>
-                                <div class="layui-input-inline layui-show-xs-block">
-                                    <button class="layui-btn" lay-submit="" lay-filter="sreach">
-                                        <i class="layui-icon">&#xe615;</i></button>
-                                </div>
-                            </form>
+                          
+                          
+                          
                         </div>
                         <div class="layui-card-header">
                             <button class="layui-btn layui-btn-danger" onclick="delAll()">
                                 <i class="layui-icon"></i>批量删除</button>
 						</div>
                         <div class="layui-card-body ">
+                        
                             <table class="layui-table layui-form">
                                 <thead>
                                     <tr>
@@ -108,7 +83,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="${pklist}" var="item">
+                                <c:forEach items="${pklist.list}" var="item" varStatus="status">
 									<tr>
 										<th>
                                             <input type="checkbox"  lay-skin="primary">
@@ -122,20 +97,24 @@
                                         <th>${item.con2_score}</th>
                                         <th>
                                         	<c:if test="${item.comp.competition_status ==1}">
-												开启
+												 <button type="button" onclick="updateStatus('${item.competition_id}')" id="${item.competition_id}" sta="${item.comp.competition_status}" class="layui-btn layui-btn-sm layui-btn-normal">开启</button> 
 											</c:if>
 											<c:if test="${item.comp.competition_status==0}">
-												关闭
+												 <button type="button" onclick="updateStatus('${item.competition_id}')" id="${item.competition_id}" sta="${item.comp.competition_status}" class="layui-btn layui-btn-sm layui-btn-danger" >关闭</button> 
 											</c:if>
                                         </th>
-                                        <th>
-                                        	<c:if test="${item.comp.vote_type ==1}">
-												正选
-											</c:if>
-											<c:if test="${item.comp.vote_type==0}">
+                                       
+                                        <c:if test="${item.comp.vote_type ==1}">
+                                        	<th style="color:#1E9FFF;">
+												正选 
+											</th>
+										</c:if>
+										<c:if test="${item.comp.vote_type==0}">
+											<th style="color:orange;">
 												反选
-											</c:if>
-                                        </th>
+											</th>
+										</c:if>
+                                        
                                         <th>${item.comp.vote_start}</th>
                                         <th>${item.comp.vote_end}</th>
 									</tr>
@@ -143,6 +122,7 @@
                              
                                 </tbody>
                             </table>
+                           
                         </div>
                         <div class="layui-card-body ">
                             <div class="page_box">
@@ -155,12 +135,13 @@
         </div>
     </body>
     <script>
-    var total="${contestants.total}";
-	var shuliang = 4-(total%4);
-	if(total%4 == 0){
-		var page = total/4;
+    
+    var total="${pklist.total}";
+	
+	if(total%8 == 0){
+		var page = total/8;
 	}else{
-		var page = parseInt(total/4)+1;
+		var page = parseInt(total/8)+1;
 	}
     // pageMe.js 使用方法
     $("#page").paging({
@@ -168,35 +149,40 @@
         totalNum: page, // 总页码
         totalList: total, // 记录总数量
         callback: function (num) { //回调函数
-        	var url="${pageContext.request.contextPath}/manager/participant_list2?pageSize="+num;
+        	var url="${pageContext.request.contextPath}/manager/pk_information2?pageSize="+num;
         	var tr = "";
     		$.get(url,function(data){
-    			for(var i = 0;data.con.length;i++){
+    			for(var i = 0;data.cpk.length;i++){
+
 	    			tr += "<tr>";
 	    			tr += "<th><input type='checkbox' name='' lay-skin='primary'></th>";
-	    			tr += "<th id='con_id'"+i+">"+data.con[i].con_id+"</th>";
-	    			tr += "<th id='name'"+i+">"+data.con[i].name+"</th>";
-	    			tr += "<th id='sex'"+i+">"+data.con[i].sex+"</th>";
-	    			tr += "<th id='introduce'"+i+">"+data.con[i].introduce+"</th>";
-	    			if(data.con[i].picture==""){
-	    				tr += "<th id='picture'"+i+"><button type='button' class='layui-btn layui-btn-sm layui-btn-danger' style=' margin-left:26%;'>无</button></th>";
+	    			tr += "<th id='con_id'"+i+">"+data.cpk[i].comp.competition_name+"</th>";
+	    			tr += "<th id='name'"+i+">"+data.cpk[i].con1_name+"</th>";
+	    			tr += "<th id='sex'"+i+">"+data.cpk[i].con1_music+"</th>";
+	    			tr += "<th id='sex'"+i+">"+data.cpk[i].con1_score+"</th>";
+	    			tr += "<th id='name'"+i+">"+data.cpk[i].con2_name+"</th>";
+	    			tr += "<th id='sex'"+i+">"+data.cpk[i].con2_music+"</th>";
+	    			tr += "<th id='sex'"+i+">"+data.cpk[i].con2_score+"</th>";
+	    			
+	    			if(data.cpk[i].comp.competition_status == 1){
+	    				tr += "<th><button type='button' onclick='updateStatus("+data.cpk[i].competition_id+")' id="+data.cpk[i].competition_id+" sta="+data.cpk[i].comp.competition_status+" class='layui-btn layui-btn-sm layui-btn-normal' >开启</button> </th>";
+	    				
 	    			}else{
-	    				tr += "<th id='picture'"+i+"><button type='button' class='layui-btn layui-btn-sm layui-btn-danger' style=' margin-left:26%;'>有</button></th>";
+	    				tr += "<th><button type='button' onclick='updateStatus("+data.cpk[i].competition_id+")' id="+data.cpk[i].competition_id+" sta="+data.cpk[i].comp.competition_status+" class='layui-btn layui-btn-sm layui-btn-danger' >关闭</button> </th>";
+	    				
 	    			}
 	    			
-	    			tr += '<th class="td-manage">'+
-	    					'<a title="上传"  href="javascript:;" id="test1"> '+
-	    						'<i class="layui-icon">&#xe67c;</i>'+
-	    					'</a>'+
-	    					'<a title="编辑" id="bj'+i+'" onclick=\'xadmin.open(\"编辑\",\"${pageContext.request.contextPath}/manager/participant_update?id='+data.con[i].id+'\")\' href="javascript:;">'+
-	    						'<i class="layui-icon">&#xe642;</i>'+
-	    					'</a>'+
-	    					'<a title="删除" onclick="del('+data.con[i].id+')" href="javascript:;" id="a'+i+'">'+
-	    						'<i class="layui-icon">&#xe640;</i>'+
-	    					'</a>'+
-	    			      '</th>';
-	            
+	    			if(data.cpk[i].comp.competition_type == 1){
+	    				tr += "<th style='color:#1E9FFF;'>正选</th>";
+	    			}else{
+	    				tr += "<th style='color:orange;'>反选</th>";
+	    			}
+	    			
+	    			tr += "<th id='sex'"+i+">"+data.cpk[i].comp.vote_start+"</th>";
+	    			tr += "<th id='sex'"+i+">"+data.cpk[i].comp.vote_end+"</th>";
+  
 	    			layui.jquery("tbody").html(tr);
+	    			
     			}
     		
     		});
@@ -204,46 +190,26 @@
     });
 	</script>
 	<script>
-	
-	layui.use('upload', function(){
-	  var upload = layui.upload;
-	   
-	  //执行实例
-	  var uploadInst = upload.render({
-	    elem: '#test1', //绑定元素
-	    url: '${pageContext.request.contextPath}/manager/upload_submit',
-	    done: function(res){
-	      //上传完毕回调
-	    	
-	    }
-	    ,error: function(){
-	      //请求异常回调
-	
-	    }
-	  });
-	});
-	
-	layui.use(['laydate','form'], function(){
-        var laydate = layui.laydate;
-        var  form = layui.form;
+	function updateStatus(id){
+		if($("#"+id).attr("sta") == 1){
+			$("#"+id).attr("sta",0);
+		}else{
+			$("#"+id).attr("sta",1);
+		} 
+		var competition_status=$("#"+id).attr("sta");
+		var url="${pageContext.request.contextPath}/manager/updateStatus";
+        var param={id:id,competition_status:competition_status};
+        $.get(url,param,function(data){
+        	if(data.flag == 1){
+        		location.reload();
+        		return false;
+        	}
+        });
+    }
+	layui.use(['form'], function(){
+		  var upload = layui.upload;
+		   var form = layui.form;
 	});
 </script>
-    <script>
-    function del(id){
-		alert(id)
-    	var result=confirm("你确定要删除该参赛者吗？");
-    	if(result){
-    		var url="${pageContext.request.contextPath}/manager/del_submit";
-    		var param={id:id};
-    		$.get(url,param,function(data){
-    			alert(data.content);
-    			if(data.flag == 1){
-    				location.reload();
-    			}
-    		});
-    	}
-    	
-    }
-    
-    </script>
+ 
 </html>

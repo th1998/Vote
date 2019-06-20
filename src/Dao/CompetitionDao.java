@@ -12,4 +12,5 @@ public interface CompetitionDao {
 	List<Contestants> getPlayerID();
 	int addConpk(Con_pk pk);
 	List<Con_pk> getPk();
+	int updateStatus(Competition competition);
 }

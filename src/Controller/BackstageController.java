@@ -131,14 +131,20 @@ public class BackstageController {
 	/*
 	 * pk信息列表页面
 	 */
-	
-	
 	@RequestMapping("/pk_information")
 	public ModelAndView pk_information_submit(){
-		List<Con_pk> pklist = competitionService.getPk();
+		PageInfo<Con_pk> pklist = competitionService.getPk();
 		ModelAndView mv=new ModelAndView("/pk_information");
 		mv.addObject("pklist",pklist);
 		return mv;
+	}
+	@RequestMapping("/pk_information2")
+	@ResponseBody
+	public PageResult pk_information_submit2(Integer pageSize){
+		PageInfo<Con_pk> pklist = competitionService.getPk(pageSize);
+		PageResult pageResult = new PageResult();
+		pageResult.setCpk(pklist.getList());
+		return pageResult;
 	}
 	
 	/*
@@ -197,6 +203,23 @@ public class BackstageController {
 			return new ResultMsg(0,"删除参赛者失败");
 		}
 	}
+	
+	/*
+	 * 修改状态请求
+	 */
+	@RequestMapping("/updateStatus")
+	@ResponseBody
+	public ResultMsg updateStatus(Competition competition) {
+		
+		int i= competitionService.updateStatus(competition);
+
+		if(i>0){
+			return new ResultMsg(1,"修改成功");
+		}else{
+			return new ResultMsg(0,"修改失败");
+		}
+	}
+	
 	
 	
 		/*
