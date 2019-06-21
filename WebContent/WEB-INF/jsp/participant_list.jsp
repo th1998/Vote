@@ -94,7 +94,7 @@
 										
 										</th>
 										<th class="td-manage">
-											 <a title="上传"  href="javascript:;" id="test1">
+											 <a title="上传"  onclick="up('${item.con_id}')" id="test${item.con_id}">
 	                                            <i class="layui-icon">&#xe67c;</i></a>
 	                                         <a title="编辑" id="bj${status.index}" onclick="xadmin.open('编辑','${pageContext.request.contextPath}/manager/participant_update?id=${item.id }')" href="javascript:;">
 	                                            <i class="layui-icon">&#xe642;</i></a>
@@ -148,7 +148,7 @@
 	    			}
 	    			
 	    			tr += '<th class="td-manage">'+
-	    					'<a title="上传"  href="javascript:;" id="test'+data.con[i].con_id+'" va="'+data.con[i].con_id+'">  '+
+	    					'<a title="上传"  onclick="up('+data.con[i].con_id+')" id="test'+data.con[i].con_id+'">  '+
 	    						'<i class="layui-icon">&#xe67c;</i>'+
 	    					'</a>'+
 	    					'<a title="编辑" id="bj'+i+'" onclick=\'xadmin.open(\"编辑\",\"${pageContext.request.contextPath}/manager/participant_update?id='+data.con[i].id+'\")\' href="javascript:;">'+
@@ -167,28 +167,31 @@
     });
 	</script>
 	<script>
+	function up(con_id){
+		console.log(con_id);
+		layui.use(['upload','form'], function(){
+			  var upload = layui.upload;
+			   var form = layui.form;
+			   console.log("bbb");
+			  //执行实例
+			  var uploadInst = upload.render({
+			    elem: '#test'+con_id, //绑定元素
+			    url: '${pageContext.request.contextPath}/manager/upload_submit', 
+			    done: function(res){
+					console.log("aaaa");
+			    },
+			    error: function(){
+					var dd=res.responseText.replace(/<\/?.+?>/g,"");
+		   			var text=dd.replace(/ /g,"");//去掉所有空格
+		   			o.msg("请求上传接口出现异常"+text),
+		   			console.log(text);
+		   			m(e)
+			    }
+			  });
+			  
+			});
+	}
 	
-	layui.use(['upload','form'], function(){
-	  var upload = layui.upload;
-	   var form = layui.form;
-	  
-	  //执行实例
-	  var uploadInst = upload.render({
-	    elem: '#test1', //绑定元素
-	    url: '${pageContext.request.contextPath}/manager/upload_submit',
-	    done: function(res){
-
-	    	
-	    },
-	    error: function(){
-			var dd=res.responseText.replace(/<\/?.+?>/g,"");
-   			var text=dd.replace(/ /g,"");//去掉所有空格
-   			o.msg("请求上传接口出现异常"+text),
-   			console.log(text);
-   			m(e)
-	    }
-	  });
-	});
 	
 	
         function del(id){
