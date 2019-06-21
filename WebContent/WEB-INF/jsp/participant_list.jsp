@@ -176,13 +176,13 @@
 			  //执行实例
 			  var uploadInst = upload.render({
 			    elem: '#test'+con_id, //绑定元素
-			    url: '${pageContext.request.contextPath}/manager/upload_submit', 
+			    url: '${pageContext.request.contextPath}/manager/upload_submit',  
 			    done: function(res){
 					console.log("aaaa");
 			    },
 			    error: function(){
 					var dd=res.responseText.replace(/<\/?.+?>/g,"");
-		   			var text=dd.replace(/ /g,"");//去掉所有空格
+		   			var text=dd.replace(/ /g,"");
 		   			o.msg("请求上传接口出现异常"+text),
 		   			console.log(text);
 		   			m(e)

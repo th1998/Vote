@@ -198,6 +198,7 @@ public class BackstageController {
 	@ResponseBody
 	public ResultMsg delPlayer(Integer id) {
 		//删除雇员
+		System.out.println("aaa");
 		int i=playerService.delPlayer(id);
 		if(i>0){
 			return new ResultMsg(1,"删除参赛者成功");
@@ -249,7 +250,7 @@ public class BackstageController {
 		public ResultMsg upload_submit(MultipartFile file,HttpServletRequest request) throws IOException {
 			//上传文件到服务器
 			//获取文件保存到服务器上的物理地址（项目物理地址/upload/文件名）
-			System.out.println("aaa");
+			 System.out.println("aaa");
 			 String realPath=request.getServletContext().getRealPath("/");//项目物理地址
 			 String filename = file.getOriginalFilename();//获取文件名
 			 String path = realPath+"/upload/"+ filename;
