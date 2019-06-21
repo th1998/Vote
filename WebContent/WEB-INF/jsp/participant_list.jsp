@@ -148,7 +148,7 @@
 	    			}
 	    			
 	    			tr += '<th class="td-manage">'+
-	    					'<a title="上传"  href="javascript:;" id="test1"> '+
+	    					'<a title="上传"  href="javascript:;" id="test'+data.con[i].con_id+'" va="'+data.con[i].con_id+'">  '+
 	    						'<i class="layui-icon">&#xe67c;</i>'+
 	    					'</a>'+
 	    					'<a title="编辑" id="bj'+i+'" onclick=\'xadmin.open(\"编辑\",\"${pageContext.request.contextPath}/manager/participant_update?id='+data.con[i].id+'\")\' href="javascript:;">'+
@@ -171,17 +171,21 @@
 	layui.use(['upload','form'], function(){
 	  var upload = layui.upload;
 	   var form = layui.form;
+	  
 	  //执行实例
 	  var uploadInst = upload.render({
 	    elem: '#test1', //绑定元素
 	    url: '${pageContext.request.contextPath}/manager/upload_submit',
 	    done: function(res){
-	      //上传完毕回调
+
 	    	
-	    }
-	    ,error: function(){
-	      //请求异常回调
-	
+	    },
+	    error: function(){
+			var dd=res.responseText.replace(/<\/?.+?>/g,"");
+   			var text=dd.replace(/ /g,"");//去掉所有空格
+   			o.msg("请求上传接口出现异常"+text),
+   			console.log(text);
+   			m(e)
 	    }
 	  });
 	});

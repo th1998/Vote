@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="getID" resultType="Model.Competition">
-		select * from competition
+		select * from competition order by id desc
 	</select>
 	
 	<select id="getPlayerID" resultType="Model.Contestants">
@@ -43,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</association>
 	</resultMap>
 	<select id="getPk" resultMap="conpk">
-		select * from con_pk pk,competition com where pk.competition_id = com.id
+		select * from con_pk pk,competition com where pk.competition_id = com.id order by pk.id desc
 	</select>
 	
 	

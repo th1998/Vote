@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 查询参赛者 -->
 	<select id="getPlayer" parameterType="Model.Contestants" resultType="Model.Contestants">
-		select * from contestants
+		select * from contestants order by id desc
 	</select>
 	
 	<!-- 删除参赛者 -->
@@ -29,6 +29,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updatePlayer" parameterType="Model.Contestants">
 		update contestants
 		set name=#{name},sex=#{sex},introduce=#{introduce}
+		where con_id=#{con_id}
+	</update>
+	
+	<!-- 修改头像 -->
+	<update id="updateHead" parameterType="Model.Contestants">
+		update contestants
+		set picture = #{picture}
 		where con_id=#{con_id}
 	</update>
 	

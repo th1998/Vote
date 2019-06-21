@@ -2,7 +2,9 @@ package Controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -244,7 +246,7 @@ public class BackstageController {
 		 */
 		@RequestMapping("/upload_submit")
 		@ResponseBody
-		public String upload_submit(MultipartFile file,HttpServletRequest request) throws IOException {
+		public ResultMsg upload_submit(MultipartFile file,HttpServletRequest request) throws IOException {
 			//上传文件到服务器
 			//获取文件保存到服务器上的物理地址（项目物理地址/upload/文件名）
 			
@@ -256,11 +258,17 @@ public class BackstageController {
 			//将上传的文件传输到File中
 			file.transferTo(f);
 			
+			Contestants c = new Contestants();
+			c.setPicture(filename);
+			System.out.println(c.getPicture());
 			
-			//跳转成功页面
-			System.out.println(filename);
+			int i = playerService.updateHead(c);
+			if(i>0) {
+				return new ResultMsg(1,"修改头像成功");
+			}else {
+				return new ResultMsg(0,"修改头像失败");
+			}
 			
-			return filename;
 		}
 	
 }

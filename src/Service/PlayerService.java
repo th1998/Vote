@@ -47,4 +47,7 @@ public class PlayerService {
 	public int updatePlayer(Contestants contestants) {
 		return playerDao.updatePlayer(contestants);
 	}
+	public int updateHead(Contestants contestants) {
+		return playerDao.updateHead(contestants);
+	}
 }

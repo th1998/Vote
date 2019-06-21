@@ -48,7 +48,7 @@
 							  <div class="layui-form-item">
 							    <label class="layui-form-label">性别</label>
 							    <div class="layui-input-block">
-							      <input type="radio" name="sex" value="男" title="男">
+							      <input type="radio" name="sex" value="男" title="男" checked>
 							      <input type="radio" name="sex" value="女" title="女">
 							    </div>
 							  </div>
@@ -94,6 +94,7 @@ layui.use(['form','layer'], function(){
      $.post(url, param, function (data) {
         if(data.flag == 1){
         	layer.msg(data.content, {icon: 1});
+        	location.href="${pageContext.request.contextPath}/manager/participant_list";
 			$(".layui-input").val("");
 			$("#introduce").val("");
         }else{

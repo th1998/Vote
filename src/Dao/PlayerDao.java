@@ -10,4 +10,5 @@ public interface PlayerDao {
 	int delPlayer(Integer id);//删除参赛者
 	Contestants findPlayer(Integer id);//查询修改的参赛者
 	int updatePlayer(Contestants contestants);//修改参赛者信息
+	int updateHead(Contestants contestants);//修改头像
 }

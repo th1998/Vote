@@ -48,17 +48,7 @@
                 <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
             </a>
         </div>
-        <div class="x-nav">
-            <span class="layui-breadcrumb">
-                <a href="">首页</a>
-                <a href="">演示</a>
-                <a>
-                    <cite>导航元素</cite></a>
-            </span>
-            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" onclick="location.reload()" title="刷新">
-                <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
-            </a>
-        </div>
+        
         <div class="layui-fluid">
             <div class="layui-row layui-col-space15">
                 <div class="layui-col-md12">
@@ -160,11 +150,13 @@
         totalNum: page, // 总页码
         totalList: total, // 记录总数量
         callback: function (num) { //回调函数
+ 
         	var url="${pageContext.request.contextPath}/manager/pk_information2?pageSize="+num;
         	var tr = "";
     		$.get(url,function(data){
-    			for(var i = 0;data.cpk.length;i++){
-
+    			
+    			for(var i = 0;i<data.cpk.length;i++){
+    				
 	    			tr += "<tr>";
 	    			tr += "<th><input type='checkbox' name='' lay-skin='primary'></th>";
 	    			tr += "<th id='con_id'"+i+">"+data.cpk[i].comp.competition_name+"</th>";
@@ -182,8 +174,8 @@
 	    				tr += "<th><button type='button' onclick='updateStatus("+data.cpk[i].competition_id+")' id="+data.cpk[i].competition_id+" sta="+data.cpk[i].comp.competition_status+" class='layui-btn layui-btn-sm layui-btn-danger' >关闭</button> </th>";
 	    				
 	    			}
-	    			
-	    			if(data.cpk[i].comp.competition_type == 1){
+	    			console.log(data.cpk[i].comp.vote_type);
+	    			if(data.cpk[i].comp.vote_type == 1){
 	    				tr += "<th style='color:#1E9FFF;'>正选</th>";
 	    			}else{
 	    				tr += "<th style='color:orange;'>反选</th>";
@@ -197,11 +189,10 @@
     			}
     		
     		});
+    		
         }
     });
-	</script>
-	<script>
-	function updateStatus(id){
+    function updateStatus(id){
 		if($("#"+id).attr("sta") == 1){
 			$("#"+id).attr("sta",0);
 		}else{
@@ -212,7 +203,7 @@
         var param={id:id,competition_status:competition_status};
         $.get(url,param,function(data){
         	if(data.flag == 1){
-        		location.reload();
+        		location.href="${pageContext.request.contextPath}/manager/pk_information?pageSize=2";
         		return false;
         	}
         });
@@ -221,6 +212,7 @@
 		  var upload = layui.upload;
 		   var form = layui.form;
 	});
-</script>
+	</script>
+
  
 </html>

@@ -27,7 +27,7 @@
 							  <div class="layui-form-item">
 							    <label class="layui-form-label">选手编号</label>
 							    <div class="layui-input-block">
-							      <input type="text" id="con_id" name="con_id" value="${c.con_id}" placeholder="请输入" autocomplete="off" class="layui-input" lay-verify="required" >
+							      <input type="text" id="con_id" name="con_id" value="${c.con_id}" layui-disabled readonly="readonly" placeholder="请输入" autocomplete="off" class="layui-input" lay-verify="required" >
 							    </div>
 							  </div>
 							  <div class="layui-form-item">

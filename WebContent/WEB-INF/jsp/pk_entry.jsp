@@ -40,7 +40,7 @@
 							    <div class="layui-input-block">
 							      <select id="title" name="competition_id">
 							        <c:forEach items="${comid}" var="item">
-										<option value="${item.id}">${item.id}</option>
+										<option value="${item.id}">${item.competition_name}</option>
 									</c:forEach>
 							      </select>
 							    </div>
@@ -60,7 +60,7 @@
 							  <div class="layui-form-item">
 							    <label class="layui-form-label">选手①编号</label>
 							    <div class="layui-input-block">
-							     <input type="text" id="con1_id" name="con1_id" value="${conid[0].con_id  }" autocomplete="off" class="layui-input" lay-verify="required" >
+							     <input type="text" id="con1_id" name="con1_id" value="${conid[0].con_id  }" layui-disabled readonly="readonly" autocomplete="off" class="layui-input" lay-verify="required" >
 							    </div>
 							  </div>
 							  <div class="layui-form-item">
@@ -83,7 +83,7 @@
 							  <div class="layui-form-item">
 							    <label class="layui-form-label">选手②编号</label>
 							    <div class="layui-input-block">
-							     <input type="text" id="con2_id" name="con2_id" value="${conid[0].con_id  }" autocomplete="off" class="layui-input" lay-verify="required" >
+							     <input type="text" id="con2_id" name="con2_id" value="${conid[0].con_id  }" layui-disabled readonly="readonly" autocomplete="off" class="layui-input" lay-verify="required" >
 							    </div>
 							  </div>	  
 							  <div class="layui-form-item">
@@ -155,7 +155,9 @@ layui.use(['form','layer','laydate'], function(){
 	
      $.post(url, param, function (res) {
         if(res.flag == 1){
+        	
         	layer.msg(res.content, {icon: 1});
+        	location.href="${pageContext.request.contextPath}/manager/pk_information";
         }else{
         	layer.alert(res.content, {icon: 2});
         }
