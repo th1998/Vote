@@ -130,6 +130,11 @@
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>参赛人员列表</cite></a>
                             </li>
+                             <li>
+                                <a onclick="xadmin.add_tab('选手海报录入','${pageContext.request.contextPath}/manager/bill_entry')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>选手海报录入</cite></a>
+                            </li>
                         </ul>
                     </li>
                     <li>

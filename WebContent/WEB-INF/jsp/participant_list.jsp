@@ -70,8 +70,8 @@
                                         <th width="10%">姓名</th>
                                         <th width="5%">性别</th>
                                         <th width="50%">选手简介</th>
-                                        <th width="10%">照片</th>
-                                        <th width="11%">操作</th>
+                                        <th width="15%">照片</th>
+                                        <th width="6%">操作</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -89,13 +89,11 @@
 												<button type="button" class="layui-btn layui-btn-sm layui-btn-danger" style=" margin-left:26%;">无</button> 
 											</c:if>
 											<c:if test='${item.picture!="" }'>
-												<button type="button" class="layui-btn layui-btn-sm" style=" margin-left:26%;">有</button> 
+												<img src="${pageContext.request.contextPath}/upload/${item.picture}" width="100" style="margin-left:20px;"> 
 											</c:if>
 										
 										</th>
 										<th class="td-manage">
-											 <a title="上传"  onclick="up('${item.con_id}')" id="test${item.con_id}">
-	                                            <i class="layui-icon">&#xe67c;</i></a>
 	                                         <a title="编辑" id="bj${status.index}" onclick="xadmin.open('编辑','${pageContext.request.contextPath}/manager/participant_update?id=${item.id }')" href="javascript:;">
 	                                            <i class="layui-icon">&#xe642;</i></a>
 	                                         <a title="删除" onclick="del('${item.id}')" href="javascript:;" id="a${status.index}">
@@ -144,13 +142,10 @@
 	    			if(data.con[i].picture==""){
 	    				tr += "<th id='picture'"+i+"><button type='button' class='layui-btn layui-btn-sm layui-btn-danger' style=' margin-left:26%;'>无</button></th>";
 	    			}else{
-	    				tr += "<th id='picture'"+i+"><button type='button' class='layui-btn layui-btn-sm layui-btn-danger' style=' margin-left:26%;'>有</button></th>";
+	    				tr += "<th id='picture'"+i+"><img src='${pageContext.request.contextPath}/upload/"+data.con[i].picture+"' width='100' style='margin-left:20px;'></th>";
 	    			}
 	    			
 	    			tr += '<th class="td-manage">'+
-	    					'<a title="上传"  onclick="up('+data.con[i].con_id+')" id="test'+data.con[i].con_id+'">  '+
-	    						'<i class="layui-icon">&#xe67c;</i>'+
-	    					'</a>'+
 	    					'<a title="编辑" id="bj'+i+'" onclick=\'xadmin.open(\"编辑\",\"${pageContext.request.contextPath}/manager/participant_update?id='+data.con[i].id+'\")\' href="javascript:;">'+
 	    						'<i class="layui-icon">&#xe642;</i>'+
 	    					'</a>'+

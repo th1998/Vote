@@ -174,7 +174,6 @@
 	    				tr += "<th><button type='button' onclick='updateStatus("+data.cpk[i].competition_id+")' id="+data.cpk[i].competition_id+" sta="+data.cpk[i].comp.competition_status+" class='layui-btn layui-btn-sm layui-btn-danger' >关闭</button> </th>";
 	    				
 	    			}
-	    			console.log(data.cpk[i].comp.vote_type);
 	    			if(data.cpk[i].comp.vote_type == 1){
 	    				tr += "<th style='color:#1E9FFF;'>正选</th>";
 	    			}else{

@@ -2,6 +2,7 @@ package Controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +59,17 @@ public class BackstageController {
 	@RequestMapping("/participants_entry")
 	public ModelAndView participants_entry() {
 		ModelAndView mv = new ModelAndView("/participants_entry");
+		return mv;
+	} 
+	
+	/*
+	 * 选手海报录入页面
+	 */
+	@RequestMapping("/bill_entry")
+	public ModelAndView bill_entry() {
+		List<Contestants> conid = competitionService.getPlayerID();//查询参赛选手编号
+		ModelAndView mv = new ModelAndView("/bill_entry");
+		mv.addObject("conid",conid);
 		return mv;
 	} 
 	
@@ -247,28 +259,43 @@ public class BackstageController {
 		 */
 		@RequestMapping("/upload_submit")
 		@ResponseBody
-		public ResultMsg upload_submit(MultipartFile file,HttpServletRequest request) throws IOException {
-			//上传文件到服务器
-			//获取文件保存到服务器上的物理地址（项目物理地址/upload/文件名）
-			 System.out.println("aaa");
-			 String realPath=request.getServletContext().getRealPath("/");//项目物理地址
-			 String filename = file.getOriginalFilename();//获取文件名
-			 String path = realPath+"/upload/"+ filename;
-			//通过给定路径来创建一个File实例
-			File f = new File(path);
-			//将上传的文件传输到File中
-			file.transferTo(f);
-			
-			Contestants c = new Contestants();
-			c.setPicture(filename);
-			System.out.println(c.getPicture());
-			
-			int i = playerService.updateHead(c);
-			if(i>0) {
-				return new ResultMsg(1,"修改头像成功");
-			}else {
-				return new ResultMsg(0,"修改头像失败");
-			}
+		public ModelAndView upload_submit(MultipartFile file,HttpServletRequest request) throws IOException {
+			 String id = request.getParameter("con_id");
+			 Integer con_id = Integer.parseInt(id);
+			 String realPath=request.getServletContext().getRealPath("/");
+			 System.out.println(realPath);
+			 String filename = file.getOriginalFilename();
+			 long currentDate = new Date().getTime();
+			 String filename2 =filename.substring(0,filename.lastIndexOf("."))
+					 +currentDate
+					 +filename.substring(filename.lastIndexOf(".")); 
+			 String newFileName =
+					 filename.substring(0,filename.lastIndexOf("."))
+					 +currentDate
+					 +filename.substring(filename.lastIndexOf("."));
+			 
+			 String path = realPath+"/upload/"+ filename2;
+			 File f = new File(path);
+			 file.transferTo(f); 
+			 
+			 System.out.println(newFileName);
+			 Contestants c = new Contestants();
+			 c.setPicture(newFileName);
+			 c.setCon_id(con_id);
+			 int i = playerService.updateHead(c);
+			 if(i>0) {
+				 List<Contestants> conid = competitionService.getPlayerID();
+				 ModelAndView mv =new ModelAndView("/bill_entry");
+				 mv.addObject("conid",conid);
+				 mv.addObject("mes","成功");
+				 return mv;
+			 }else {
+				 List<Contestants> conid = competitionService.getPlayerID();
+				 ModelAndView mv =new ModelAndView("/bill_entry");
+				 mv.addObject("mes","失败");
+				 mv.addObject("conid",conid);
+				 return mv;
+			 }
 			
 		}
 	

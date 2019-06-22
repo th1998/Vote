@@ -36,7 +36,7 @@
                            <form class="layui-form">
                            
                              <div class="layui-form-item">
-							    <label class="layui-form-label">比赛主题代号</label>
+							    <label class="layui-form-label">比赛主题</label>
 							    <div class="layui-input-block">
 							      <select id="title" name="competition_id">
 							        <c:forEach items="${comid}" var="item">
