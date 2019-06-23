@@ -46,10 +46,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from con_pk pk,competition com where pk.competition_id = com.id order by pk.id desc
 	</select>
 	
+	<select id="getonePk" resultMap="conpk" parameterType="int">
+		select * from con_pk pk,competition com 
+		where com.id = pk.competition_id
+		and com.id  = #{id}
+	</select>
+	
 	
 	<update id="updateStatus" parameterType="Model.Competition">
 		update competition
 		set competition_status = #{competition_status}
 		where id=#{id}
 	</update>
+	
+	<select id="findHead" parameterType="int" resultType="Model.Contestants">
+		select * from contestants
+        where con_id=#{con_id}
+	</select>
+	
+	
 </mapper>

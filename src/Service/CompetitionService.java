@@ -32,6 +32,16 @@ public class CompetitionService {
 	public int addConpk(Con_pk pk) {
 		return competitionDao.addConpk(pk);
 	}
+	
+	//联合查询 pk信息
+	public List<Con_pk> getPk2(){
+		return competitionDao.getPk();
+	}
+	
+	public List<Con_pk> getonePk(Integer id){
+		return competitionDao.getonePk(id);
+	}
+	
 	//联合查询 pk信息
 	public PageInfo<Con_pk> getPk(){
 		PageHelper.startPage(1, 8);
@@ -49,5 +59,9 @@ public class CompetitionService {
 	
 	public int updateStatus(Competition competition){
 		return competitionDao.updateStatus(competition);
+	}
+	
+	public List<Contestants> findHead(Integer con_id){
+		return competitionDao.findHead(con_id);
 	}
 }

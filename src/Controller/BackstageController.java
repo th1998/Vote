@@ -298,5 +298,37 @@ public class BackstageController {
 			 }
 			
 		}
+		
+		/*
+		 * 投票结果页面
+		 */
+		@RequestMapping("/vote_result")
+		public ModelAndView vote_result() {
+			List<Con_pk> pk = competitionService.getPk2();
+			ModelAndView mv =new ModelAndView("/vote_result");
+			mv.addObject("pk",pk);
+			return mv;
+		}
+		
+		@RequestMapping("/vote_result2")
+		@ResponseBody
+		public List<Con_pk> result() {
+			List<Con_pk> pk = competitionService.getPk2();
+			return pk;
+		}
+		
+		@RequestMapping("/onepk")
+		@ResponseBody
+		public List<Con_pk> getonePk(Integer id){
+			List<Con_pk> onepk = competitionService.getonePk(id);
+			return onepk;
+		}
+		
+		@RequestMapping("/findhead")
+		@ResponseBody
+		public List<Contestants> findHead(Integer con_id){
+			List<Contestants> headlist = competitionService.findHead(con_id);
+			return headlist;
+		}
 	
 }
