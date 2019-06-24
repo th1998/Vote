@@ -193,7 +193,7 @@
     		return result;
         }
     });
-    
+
     
     function updateStatus(id){
 		if($("#"+id).attr("sta") == 1){
