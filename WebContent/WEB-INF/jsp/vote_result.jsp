@@ -12,6 +12,10 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/echarts.min.js" ></script>
 <script src="${pageContext.request.contextPath}/lib/layui/layui.js" charset="utf-8"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/xadmin.js"></script>
+<script src='https://code.jquery.com/jquery-1.11.2.min.js'></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/lib/3/amcharts.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/lib/3/serial.js"></script>
+
 <title>投票结果</title>
 <style>
 			*{
@@ -33,13 +37,13 @@
 			.left{
 				width: 30%;
 				height: 500px;
-
 				float: left;
 			}
-			.center{
+			#chartdiv{
 				width: 40%;
-				height: 500px;
+				height: 400px;
 				float: left;
+				/*background:#ffffff;*/
 			}
 			.right{
 				width: 30%;
@@ -65,24 +69,45 @@
 			}
 			.name1,.name2{
 				text-align: center;
-				font-size: 20px;
+				font-size: 30px;
 				color: #FFFFFF;
 			}
 			#main{
 				width:100%;
 				height:400px; 	
 				margin: 0 auto;
-				margin-top: 50px;
+				margin-top: 60px;
+			}
+			#cd{
+			   width:400px;
+			   height:50px;
+			  
+			   float:left;
+			  }
+			#cd1{
+				float:left;
+			}
+			#nav{
+				width:50px;
+				height:50px;
+				float:left;
+			}
+			.pk{
+				float:left;
+				position: relative;
+			}
+			#chartdiv{
+				z-index:-1;
 			}
 		</style>
 </head>
 	<body>
 		<div class="bg">
-		
-			<form class="layui-form">
-				<div class="layui-form-item">
+			<div id="nav"></div>
+			<form class="layui-form" id="cd1">
+				<div class="layui-form-item" id="cd" style="display:none;">
 					<label class="layui-form-label" style="color:#ffffff;">比赛主题</label>
-					<div class="layui-input-inline layui-show-xs-block">
+					<div class="layui-input-inline layui-show-xs-block" id="se">
 						<select id="id" name="id" lay-filter="competition_name">
 							<c:forEach items="${pk}" var="item" varStatus="status">
 								<c:if test='${item.comp.competition_status==1 }'>
@@ -94,7 +119,7 @@
 				</div>
 			</form>
 			
-			<p id="title" style="font-size:26px;"></p>
+			<p id="title" style="font-size:40px;"></p>
 			<div class="left">
 				<div class="bill1">
 					<!--选手海报-->
@@ -103,7 +128,9 @@
 				<p class="name1"></p> 
 			</div>
 			<div class="center">
-				<div id="main"></div>
+				<div id="chartdiv">
+					
+				</div>
 			</div>
 			<div class="right">
 				<div class="bill2">
@@ -117,10 +144,16 @@
 	</body>
 	
 	<script type="text/javascript">
+	$("#nav").mouseover(function(){
+		var status = $("#cd");
+		status.attr("style","display:block");
+	});
+	
 	layui.use('form', function(){
 		  var form = layui.form;
 		  
 		  form.on('select(competition_name)', function(data){
+			  $("#cd").attr("style","display:none");
 			  var id = $("#id option:selected").attr("value");
 			  var con1_id = $("#id option:selected").attr("con1_id");
 			  var con2_id = $("#id option:selected").attr("con2_id");
@@ -139,120 +172,91 @@
 			     $.post(url, function (res) {
 			    	 $(".name1").html(res[0].con1_name);
 					 $(".name2").html(res[0].con2_name);
-			    	 var xA = [];
-			         var yA = [];
-			         xA.push(res[0].con1_name,res[0].con2_name);
-			         yA.push(res[0].con1_score,res[0].con2_score);
+					 
+					 
+					 var chart = AmCharts.makeChart("chartdiv", {
+						    "theme": "none",
+						    "type": "serial",
+						    "fontSize":18,
+						    "color":"#ffffff",
+							 "startDuration": 2,
+						    "dataProvider": [{
+						        "country": res[0].con1_name,
+						        "visits": res[0].con1_score,
+						        "color": "#FF0F00"
+						    },{
+						        "country": "VS",
+						        "visits": '<img src="../images/pk.png" width="100">',
+						        "color": "#0D8ECF"
 
-			         myChart.setOption({        //加载数据图表
-			             xAxis: {
-			                  data: xA   
-			             },       
-			             series: [{
-			                  data: yA
-			               
-			             }]
-			         });
+						    },{
+						        "country": res[0].con2_name,
+						        "visits": res[0].con2_score,
+						        "color": "#0D8ECF"
+
+						    }],
+						    "valueAxes": [{
+						        "axisAlpha":0,
+						        "gridAlpha":0 ,
+						        "labelsEnabled":false,
+						    }],
+						    "graphs": [{
+						        "balloonText": "[[category]]: <b>[[value]]</b>",
+						        "labelText":"[[value]]",
+						        "colorField": "color",
+						        "fillAlphas": 0.85,
+						        "lineAlpha": 0.1,
+						        "type": "column",
+						        "topRadius":1,
+						        "valueField": "visits",
+						        "columnWidth" :0.5,
+						        "fontSize":20
+						        
+						    }],
+						    "depth3D": 50,
+							  "angle": 10,
+						    "chartCursor": {
+						        "categoryBalloonEnabled": false,
+						        "cursorAlpha": 0,
+						        "zoomable": true
+						    },    
+						    "categoryField": "country",
+						    "categoryAxis": {
+						        "gridPosition": "start",
+						        "axisAlpha":0,
+						        "gridAlpha":0
+						    },
+							"exportConfig":{
+								    "menuTop":"20px",
+						        "menuRight":"20px",
+						        "menuItems": [{
+						        "icon": '/lib/3/images/export.png',
+						        "format": 'png'	  
+						        }]  
+						    }
+						},0);
+
+						jQuery('.chart-input').off().on('input change',function() {
+							var property	= jQuery(this).data('property');
+							var target		= chart;
+							chart.startDuration = 0;
+
+							if ( property == 'topRadius') {
+								target = chart.graphs[0];
+							}
+
+							target[property] = this.value;
+							chart.validateNow();
+						});
+						
+					
+			    	
 			 	
 			 	
 			    });
 		  });
 	});
-        var myChart = echarts.init(document.getElementById('main'));
-		// 显示标题，图例和空的坐标轴
-		myChart.setOption({
-		    title: {
-		        text: '选手得票数',
-		        textStyle:{
-		            color:'#c4d9f5',
-		            fontStyle:'normal',
-		            fontWeight:'bold',
-		            fontSize:16
-		        }
-		    },
-		    tooltip: {},
-		    legend: {},
-		    xAxis: {
-		        data: [],
-		        axisLabel:{
-		            show:true,
-		            color:'#ffffff'
-		        },
-		        splitLine:{
-            	　　　　show:false
-                }
-		    },
-		    yAxis: {
-		    	axisLabel:{
-		            color:'#ffffff',
-		        },
-		        splitLine:{
-            	　　　　show:false
-                }
-		    },
-		    series: [{
-		        type: 'bar',
-		        barWidth : 50, 
-		        itemStyle: {
-                    normal: {
-                    	label: {
-						show: true, //开启显示
-						position: 'top', //在上方显示
-						textStyle: { //数值样式
-							color: '#ffffff',
-							fontSize: 18
-						}
-					},
-                    	
-          　　　　　　　　　　color: function(params) {
-                             var colorList = [
-                                   '#C1232B','#27A9E3'
-                             ];
-                             return colorList[params.dataIndex]
-                         },
-         
-    
-                    }
-                },
-		        data: []
-		    }]
-		});
+       
 
-// 异步加载数据
-	/*$.ajax({
-		url:"${pageContext.request.contextPath}/manager/vote_result2",
-		success:function(data){
-			console.log(data)
-      	var xA = [];
-        var yA = [];
-        for(var i = 0; i < 1; i++) {
-            xA.push(data[i].con1_name,data[i].con2_name);
-            yA.push(data[i].con1_score,data[i].con2_score);
-        }
-                myChart.setOption({        //加载数据图表
-                    xAxis: {
-                        data: xA,
-                        color: 'red',
-                        axisLabel : {//坐标轴刻度标签的相关设置。
-		                interval:0,
-		                rotate:"25",
-		            }
-                    },
-                    
-                     grid:{//直角坐标系内绘图网格
-			            show:true,//是否显示直角坐标系网格。[ default: false ]
-			            right:"30px",
-			            borderColor:"#000",//网格的边框颜色
-			            bottom:"20%" //
-			        },
-                    series: [{
-                        // 根据名字对应到相应的系列
-                        name: '评分',
-                        data: yA
-                    }]
-                });
-	
-	}
-	});*/
     </script>
 </html>

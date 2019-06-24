@@ -136,7 +136,7 @@
         </div>
     </body>
     <script>
-    
+    var result=1;
     var total="${pklist.total}";
 	
 	if(total%8 == 0){
@@ -150,7 +150,8 @@
         totalNum: page, // 总页码
         totalList: total, // 记录总数量
         callback: function (num) { //回调函数
- 
+        	console.log(num)
+        	
         	var url="${pageContext.request.contextPath}/manager/pk_information2?pageSize="+num;
         	var tr = "";
     		$.get(url,function(data){
@@ -184,13 +185,16 @@
 	    			tr += "<th id='sex'"+i+">"+data.cpk[i].comp.vote_end+"</th>";
   
 	    			layui.jquery("tbody").html(tr);
-	    			
+	    			$("#bbbb").html(num);
     			}
     		
     		});
-    		
+    		var result=JSON.parse(num);
+    		return result;
         }
     });
+    
+    
     function updateStatus(id){
 		if($("#"+id).attr("sta") == 1){
 			$("#"+id).attr("sta",0);
@@ -202,8 +206,44 @@
         var param={id:id,competition_status:competition_status};
         $.get(url,param,function(data){
         	if(data.flag == 1){
-        		location.href="${pageContext.request.contextPath}/manager/pk_information?pageSize=2";
-        		return false;
+        		var url="${pageContext.request.contextPath}/manager/pk_information2?pageSize=2";
+        		console.log(url)
+            	var tr = "";
+        		$.get(url,function(data){
+        			
+        			for(var i = 0;i<data.cpk.length;i++){
+        				
+    	    			tr += "<tr>";
+    	    			tr += "<th><input type='checkbox' name='' lay-skin='primary'></th>";
+    	    			tr += "<th id='con_id'"+i+">"+data.cpk[i].comp.competition_name+"</th>";
+    	    			tr += "<th id='name'"+i+">"+data.cpk[i].con1_name+"</th>";
+    	    			tr += "<th id='sex'"+i+">"+data.cpk[i].con1_music+"</th>";
+    	    			tr += "<th id='sex'"+i+">"+data.cpk[i].con1_score+"</th>";
+    	    			tr += "<th id='name'"+i+">"+data.cpk[i].con2_name+"</th>";
+    	    			tr += "<th id='sex'"+i+">"+data.cpk[i].con2_music+"</th>";
+    	    			tr += "<th id='sex'"+i+">"+data.cpk[i].con2_score+"</th>";
+    	    			
+    	    			if(data.cpk[i].comp.competition_status == 1){
+    	    				tr += "<th><button type='button' onclick='updateStatus("+data.cpk[i].competition_id+")' id="+data.cpk[i].competition_id+" sta="+data.cpk[i].comp.competition_status+" class='layui-btn layui-btn-sm layui-btn-normal' >开启</button> </th>";
+    	    				
+    	    			}else{
+    	    				tr += "<th><button type='button' onclick='updateStatus("+data.cpk[i].competition_id+")' id="+data.cpk[i].competition_id+" sta="+data.cpk[i].comp.competition_status+" class='layui-btn layui-btn-sm layui-btn-danger' >关闭</button> </th>";
+    	    				
+    	    			}
+    	    			if(data.cpk[i].comp.vote_type == 1){
+    	    				tr += "<th style='color:#1E9FFF;'>正选</th>";
+    	    			}else{
+    	    				tr += "<th style='color:orange;'>反选</th>";
+    	    			}
+    	    			
+    	    			tr += "<th id='sex'"+i+">"+data.cpk[i].comp.vote_start+"</th>";
+    	    			tr += "<th id='sex'"+i+">"+data.cpk[i].comp.vote_end+"</th>";
+      
+    	    			layui.jquery("tbody").html(tr);
+    	    			
+        			}
+        		
+        		});
         	}
         });
     }
