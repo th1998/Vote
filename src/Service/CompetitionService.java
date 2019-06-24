@@ -64,4 +64,11 @@ public class CompetitionService {
 	public List<Contestants> findHead(Integer con_id){
 		return competitionDao.findHead(con_id);
 	}
+	public String findHead2(Integer i) {
+		return competitionDao.findHead2(i);
+	}
+	
+	public List<Con_pk> findpk() {
+		return competitionDao.findpk();
+	}
 }

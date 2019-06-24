@@ -2,6 +2,7 @@ package Controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -326,9 +327,59 @@ public class BackstageController {
 		
 		@RequestMapping("/findhead")
 		@ResponseBody
-		public List<Contestants> findHead(Integer con_id){
+		public List<Contestants> findHead(Integer con_id,Integer num){
 			List<Contestants> headlist = competitionService.findHead(con_id);
+			System.out.println(num); 
 			return headlist;
+		}
+		
+		@RequestMapping("/findpk")
+		@ResponseBody
+		public List<Con_pk> findpk(Integer con_id){
+			List<Con_pk> statuspk = competitionService.findpk();
+			return statuspk;
+		}
+		
+		
+		
+		
+		
+		/*
+		 * Í¶Æ±Ò³Ãæ
+		 * */
+		@RequestMapping("/vote")
+		@ResponseBody
+		public ModelAndView vote(Integer con_id) {
+			List<Con_pk> pk = competitionService.getPk2();
+			List<Con_pk> statuspk = competitionService.findpk();
+			ModelAndView mv =new ModelAndView("/vote");
+			mv.addObject("pk",pk);
+			mv.addObject("statuspk",statuspk);
+			/*List<Integer> pk_num= new ArrayList<Integer>();
+			System.out.println(pk.size());
+			for(int j =0;j<pk.size();j++) {
+				if(pk.get(j).getComp().getCompetition_status() == 1) {					
+							pk_num.add(pk.get(j).getCon1_id());
+							pk_num.add(pk.get(j).getCon2_id());
+											
+				}
+			}
+			List<String> pic= new ArrayList<String>();
+			for(int i=0;i<pk_num.size();i++) {
+				String headlist = competitionService.findHead2(pk_num.get(i));
+				pic.add(headlist);
+			}
+			System.out.println(pic);
+			mv.addObject("pic",pic);*/
+			return mv;
+		}
+		
+		
+		@RequestMapping("/vote_submit")
+		@ResponseBody
+		public List<Con_pk> vote_submit() {
+			List<Con_pk> pk_xx = competitionService.findpk();
+			return pk_xx;
 		}
 	
 }

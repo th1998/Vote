@@ -46,6 +46,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from con_pk pk,competition com where pk.competition_id = com.id order by pk.id desc
 	</select>
 	
+	<select id="findpk" resultMap="conpk">
+		select * from con_pk pk,competition com where pk.competition_id = com.id and com.competition_status=1
+	</select>
+	
 	<select id="getonePk" resultMap="conpk" parameterType="int">
 		select * from con_pk pk,competition com 
 		where com.id = pk.competition_id
@@ -64,5 +68,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where con_id=#{con_id}
 	</select>
 	
+	<select id="findHead2" parameterType="int" resultType="String">
+		select picture from contestants
+        where con_id=#{con_id}
+	</select>
 	
 </mapper>
