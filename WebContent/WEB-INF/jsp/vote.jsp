@@ -20,7 +20,7 @@
 <div class="swiper-container">
     <div class="swiper-wrapper">
     <c:forEach items="${statuspk}" var="item" varStatus="status">
-		<c:if test='${item.comp.competition_status==1 }'>
+		
 			<section class="swiper-slide swiper-slide1">
         	<div class="box">  
         		<div id="head1${item.con1_id }" style="display:none;">${item.con1_id }</div> 
@@ -41,7 +41,7 @@
         		    			${item.con1_music }
         		    		</p>
         		    		</div>
-        		    		<div class="zan1 heart"  id="like1" rel="like">
+        		    		<div class="zan1 heart"  id="${item.comp.id }" con_id="${item.con1_id }"  rel="like">
         		    		</div>
         		    	</div>
         		    	<div class="pk">
@@ -54,7 +54,7 @@
         		    			${item.con2_music }
         		    		</p>
         		    		</div>
-        		    		<div class="zan2 heart" id="zan2" id="like2" rel="like">
+        		    		<div class="zan2 heart" id="${item.comp.id }" con_id="${item.con2_id }"rel="like">
         		    		</div>
         		    	</div>
         		        <div class="times">
@@ -68,7 +68,7 @@
         	</div>
         </section>
 
-		</c:if>
+		
 	</c:forEach>
         
     </div>
@@ -104,7 +104,7 @@ $.post(url, function (res) {
 			        		    			''+res[i].con1_music+''+
 			        		    		'</p>'+
 			        		    		'</div>'+
-			        		    		'<div class="zan1 heart"  id="like1" rel="like">'+
+			        		    		'<div class="zan1 heart"  id="'+res[i].comp.id+'" con_id="'+res[i].con1_id+'" rel="like">'+
 			        		    		'</div>'+
 			        		    	'</div>'+
 			        		    	'<div class="pk">'+
@@ -117,7 +117,7 @@ $.post(url, function (res) {
 			        		    		''+res[i].con2_music+''+
 			        		    		'</p>'+
 			        		    		'</div>'+
-			        		    		'<div class="zan2 heart" id="zan2" id="like2" rel="like">'+
+			        		    		'<div class="zan2 heart" id="'+res[i].comp.id+'" con_id="'+res[i].con2_id+'" rel="like">'+
 			        		    		'</div>'+
 			        		    	'</div>'+
 			        		        '<div class="times">'+
@@ -138,10 +138,7 @@ $.post(url, function (res) {
 			    type:'post',
 			    async: false,
 			    success:function(res2){
-			    	console.log("选手1："+i)
-			    	console.log(res2)
-					$("#pic1"+i).html('<img src="${pageContext.request.contextPath}/upload/'+res2[0].picture+'" width="180" height="300">');  
-			    	console.log($("#pic1"+i).html())   
+					$("#pic1"+i).html('<img src="${pageContext.request.contextPath}/upload/'+res2[0].picture+'" width="180" height="300">');   
 			    }
 			 });
 			
@@ -217,31 +214,31 @@ scaleH=window.innerHeight/480;
   </script>
   
   <script>   
-	$('body').on("click",'.heart',function()
-    {
-    	var A=$(this).attr("id");
-//  	console.log(A);
-//  	var B=A.split("like");
-//  	console.log(B);
-//      var messageID=B[1];
-//      console.log(messageID);
+	$('body').on("click",'.heart',function(){
+    	var id=$(this).attr("id");
+    	var con_id=$(this).attr("con_id");
+    	console.log(id);
+    	console.log(con_id);
     	$(this).css("background-position","")
         var D=$(this).attr("rel");
-       
-        if(D === 'like') 
-        {      
-        $(this).addClass("heartAnimation").attr("rel","unlike"); 
-        
-        console.log("红心");
-        return 0;
+    	if($(this).hasClass("heartAnimation")){
+            $(this).removeClass("heartAnimation");
+        }else{
+            $(".heart").each(function () {
+                $(this).removeClass("heartAnimation");
+            })
+            $(this).addClass("heartAnimation").attr("rel","unlike");
+            
         }
-        else
-        {
-        $(this).removeClass("heartAnimation").attr("rel","like");
-        $(this).css("background-position","left");
-        console.log("没有红心");
-        return 1;
-        }
+    	
+       	$.ajax({
+		    url: '${pageContext.request.contextPath}/manager/zan_submit?voted_comid='+id+'&voted_contestantid='+con_id,
+		    type:'post',
+		    async: true,
+		    success:function(data){
+		    	
+		    }
+		 });
     });
 	</script>
  

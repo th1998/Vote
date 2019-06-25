@@ -12,6 +12,7 @@ import Dao.CompetitionDao;
 import Model.Competition;
 import Model.Con_pk;
 import Model.Contestants;
+import Model.Vote;
 @Service
 public class CompetitionService {
 	@Autowired
@@ -70,5 +71,8 @@ public class CompetitionService {
 	
 	public List<Con_pk> findpk() {
 		return competitionDao.findpk();
+	}
+	public int addVote(Vote vote) {
+		return competitionDao.addVote(vote);
 	}
 }

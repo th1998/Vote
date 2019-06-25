@@ -158,6 +158,8 @@
 			  var con1_id = $("#id option:selected").attr("con1_id");
 			  var con2_id = $("#id option:selected").attr("con2_id");
 			  $("#title").html($("#id option:selected").html());
+			  
+			  
 			  var url2 = '${pageContext.request.contextPath}/manager/findhead?con_id='+con1_id;
 			  $.post(url2, function (res2) {
 				  $(".bill1").html('<img src="${pageContext.request.contextPath}/upload/'+res2[0].picture+'" width="200" height="300">');
@@ -172,7 +174,8 @@
 			     $.post(url, function (res) {
 			    	 $(".name1").html(res[0].con1_name);
 					 $(".name2").html(res[0].con2_name);
-					 
+					 console.log(id)
+					 console.log(res[0].con1_id)
 					 
 					 var chart = AmCharts.makeChart("chartdiv", {
 						    "theme": "none",

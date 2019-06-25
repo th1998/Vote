@@ -72,5 +72,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select picture from contestants
         where con_id=#{con_id}
 	</select>
-	
+	<insert id="addVote" parameterType="Model.Vote">
+		insert into vote (voted_comid,voted_contestantid) values(#{voted_comid},#{voted_contestantid})
+	</insert>
 </mapper>

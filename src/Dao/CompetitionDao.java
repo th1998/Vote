@@ -5,6 +5,7 @@ import java.util.List;
 import Model.Competition;
 import Model.Con_pk;
 import Model.Contestants;
+import Model.Vote;
 
 public interface CompetitionDao {
 	int addCompetition(Competition competition);
@@ -17,4 +18,5 @@ public interface CompetitionDao {
 	int updateStatus(Competition competition);
 	List<Contestants> findHead(Integer con_id);
 	String findHead2(Integer i);
+	int addVote(Vote vote);
 }

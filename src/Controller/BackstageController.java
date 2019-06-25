@@ -25,6 +25,7 @@ import Model.Contestants;
 
 
 import Model.ResultMsg;
+import Model.Vote;
 import Service.CompetitionService;
 import Service.PlayerService;
 import Model.PageResult;
@@ -379,6 +380,19 @@ public class BackstageController {
 		public List<Con_pk> vote_submit() {
 			List<Con_pk> pk_xx = competitionService.findpk();
 			return pk_xx;
+		}
+		
+		@RequestMapping("/zan_submit")
+		@ResponseBody
+		public ResultMsg zan_submit(Integer voted_comid,Integer voted_contestantid) {
+			Vote v = new Vote();
+			v.setVoted_comid(voted_comid);
+			v.setVoted_contestantid(voted_contestantid);
+			int i =competitionService.addVote(v);
+			if(i>0) {
+				return new ResultMsg(1, "¹§Ï²Äú£¬Í¶Æ±³É¹¦£¡");
+			}
+			return new ResultMsg(0, "Í¶Æ±Ê§°Ü");
 		}
 	
 }
