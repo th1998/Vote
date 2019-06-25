@@ -327,9 +327,8 @@ public class BackstageController {
 		
 		@RequestMapping("/findhead")
 		@ResponseBody
-		public List<Contestants> findHead(Integer con_id,Integer num){
+		public List<Contestants> findHead(Integer con_id){
 			List<Contestants> headlist = competitionService.findHead(con_id);
-			System.out.println(num); 
 			return headlist;
 		}
 		
