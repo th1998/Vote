@@ -75,4 +75,12 @@ public class CompetitionService {
 	public int addVote(Vote vote) {
 		return competitionDao.addVote(vote);
 	}
+	
+	public int getScore(Vote vote){
+		return competitionDao.getScore(vote);
+	}
+	
+	public int findip(Vote vote){
+		return competitionDao.findip(vote);
+	}
 }

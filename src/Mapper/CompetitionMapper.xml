@@ -75,4 +75,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="addVote" parameterType="Model.Vote">
 		insert into vote (voted_comid,voted_contestantid) values(#{voted_comid},#{voted_contestantid})
 	</insert>
+	
+	
+	
+	<select id="getScore" parameterType="Model.Vote" resultType="int">
+		select count(*) from vote
+		where voted_comid = #{voted_comid}
+		and voted_contestantid = #{voted_contestantid}
+	</select>
+	
+	<select id="findip" resultType="int" parameterType="Model.Vote">
+		select COUNT(*) from vote
+		where voted_comid = #{voted_comid}
+		and voter_ip = #{voter_ip}
+	</select>
 </mapper>

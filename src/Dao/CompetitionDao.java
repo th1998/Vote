@@ -19,4 +19,6 @@ public interface CompetitionDao {
 	List<Contestants> findHead(Integer con_id);
 	String findHead2(Integer i);
 	int addVote(Vote vote);
+	int getScore(Vote vote);
+	int findip(Vote vote);
 }

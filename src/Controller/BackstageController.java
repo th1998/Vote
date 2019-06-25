@@ -394,5 +394,28 @@ public class BackstageController {
 			}
 			return new ResultMsg(0, "投票失败");
 		}
+		
+		/*
+		 * 返回分数
+		 */
+		@RequestMapping("/getScore")
+		@ResponseBody
+		public int getScore(Vote vote){
+			Vote v = new Vote();
+			v.setVoted_comid(vote.getVoted_comid());
+			v.setVoted_contestantid(vote.getVoted_contestantid());
+			int score = competitionService.getScore(v);
+			return score;
+		}
+		
+		@RequestMapping("/findip")
+		@ResponseBody
+		public int findip(Vote vote){
+			Vote v = new Vote();
+			v.setVoted_comid(vote.getVoted_comid());
+			v.setVoter_ip(vote.getVoter_ip());
+			int ip = competitionService.findip(v);
+			return ip;
+		}
 	
 }

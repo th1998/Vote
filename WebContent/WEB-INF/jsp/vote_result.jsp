@@ -154,12 +154,14 @@
 		  
 		  form.on('select(competition_name)', function(data){
 			  $("#cd").attr("style","display:none");
-			  var id = $("#id option:selected").attr("value");
-			  var con1_id = $("#id option:selected").attr("con1_id");
-			  var con2_id = $("#id option:selected").attr("con2_id");
-			  $("#title").html($("#id option:selected").html());
 			  
-			  
+			  setInterval(function(){
+					console.log("刷新一次");
+					 
+					  var id = $("#id option:selected").attr("value");
+					  var con1_id = $("#id option:selected").attr("con1_id");
+					  var con2_id = $("#id option:selected").attr("con2_id");
+					  $("#title").html($("#id option:selected").html());
 			  var url2 = '${pageContext.request.contextPath}/manager/findhead?con_id='+con1_id;
 			  $.post(url2, function (res2) {
 				  $(".bill1").html('<img src="${pageContext.request.contextPath}/upload/'+res2[0].picture+'" width="200" height="300">');
@@ -170,93 +172,104 @@
 				  $(".bill2").html('<img src="${pageContext.request.contextPath}/upload/'+res3[0].picture+'" width="200" height="300">');
 			  });
 			  
-			  var url = '${pageContext.request.contextPath}/manager/onepk?id='+id;		
-			     $.post(url, function (res) {
-			    	 $(".name1").html(res[0].con1_name);
-					 $(".name2").html(res[0].con2_name);
-					 console.log(id)
-					 console.log(res[0].con1_id)
-					 
-					 var chart = AmCharts.makeChart("chartdiv", {
-						    "theme": "none",
-						    "type": "serial",
-						    "fontSize":18,
-						    "color":"#ffffff",
-							 "startDuration": 2,
-						    "dataProvider": [{
-						        "country": res[0].con1_name,
-						        "visits": res[0].con1_score,
-						        "color": "#FF0F00"
-						    },{
-						        "country": "VS",
-						        "visits": '<img src="../images/pk.png" width="100">',
-						        "color": "#0D8ECF"
+				  var url = '${pageContext.request.contextPath}/manager/onepk?id='+id;		
+				     $.post(url, function (res) {
+				    	 $(".name1").html(res[0].con1_name);
+						 $(".name2").html(res[0].con2_name);
+						 console.log(id)
+						 console.log(res[0].con1_id)
+						 
+						 var rr = '${pageContext.request.contextPath}/manager/getScore?voted_contestantid='+res[0].con1_id+'&voted_comid='+res[0].id;
+						 $.post(rr, function (data) {
+							 console.log("wo:"+data)
+							 var rr2 = '${pageContext.request.contextPath}/manager/getScore?voted_contestantid='+res[0].con2_id+'&voted_comid='+res[0].id;
+							 $.post(rr2, function (data2) {
+								 console.log("wo2:"+data2)
+								 var chart = AmCharts.makeChart("chartdiv", {
+									    "theme": "none",
+									    "type": "serial",
+									    "fontSize":18,
+									    "color":"#ffffff",
+										 "startDuration": 0,
+									    "dataProvider": [{
+									        "country": res[0].con1_name,
+									        "visits": data,
+									        "color": "#FF0F00"
+									    },{
+									        "country": "VS",
+									        "visits": '<img src="../images/pk.png" width="100">',
+									        "color": "#0D8ECF"
 
-						    },{
-						        "country": res[0].con2_name,
-						        "visits": res[0].con2_score,
-						        "color": "#0D8ECF"
+									    },{
+									        "country": res[0].con2_name,
+									        "visits": data2,
+									        "color": "#0D8ECF"
 
-						    }],
-						    "valueAxes": [{
-						        "axisAlpha":0,
-						        "gridAlpha":0 ,
-						        "labelsEnabled":false,
-						    }],
-						    "graphs": [{
-						        "balloonText": "[[category]]: <b>[[value]]</b>",
-						        "labelText":"[[value]]",
-						        "colorField": "color",
-						        "fillAlphas": 0.85,
-						        "lineAlpha": 0.1,
-						        "type": "column",
-						        "topRadius":1,
-						        "valueField": "visits",
-						        "columnWidth" :0.5,
-						        "fontSize":20
-						        
-						    }],
-						    "depth3D": 50,
-							  "angle": 10,
-						    "chartCursor": {
-						        "categoryBalloonEnabled": false,
-						        "cursorAlpha": 0,
-						        "zoomable": true
-						    },    
-						    "categoryField": "country",
-						    "categoryAxis": {
-						        "gridPosition": "start",
-						        "axisAlpha":0,
-						        "gridAlpha":0
-						    },
-							"exportConfig":{
-								    "menuTop":"20px",
-						        "menuRight":"20px",
-						        "menuItems": [{
-						        "icon": '/lib/3/images/export.png',
-						        "format": 'png'	  
-						        }]  
-						    }
-						},0);
+									    }],
+									    "valueAxes": [{
+									        "axisAlpha":0,
+									        "gridAlpha":0 ,
+									        "labelsEnabled":false,
+									        "minimum":0,
+									        "maximum":100
+									    }],
+									    "graphs": [{
+									        "balloonText": "[[category]]: <b>[[value]]</b>",
+									        "labelText":"[[value]]",
+									        "colorField": "color",
+									        "fillAlphas": 0.85,
+									        "lineAlpha": 0.1,
+									        "type": "column",
+									        "topRadius":1,
+									        "valueField": "visits",
+									        "columnWidth" :0.5,
+									        "fontSize":20
+									        
+									    }],
+									    "depth3D": 50,
+										  "angle": 10,
+									    "chartCursor": {
+									        "categoryBalloonEnabled": false,
+									        "cursorAlpha": 0,
+									        "zoomable": true
+									    },    
+									    "categoryField": "country",
+									    "categoryAxis": {
+									        "gridPosition": "start",
+									        "axisAlpha":0,
+									        "gridAlpha":0
+									    },
+										"exportConfig":{
+											    "menuTop":"20px",
+									        "menuRight":"20px",
+									        "menuItems": [{
+									        "icon": '/lib/3/images/export.png',
+									        "format": 'png'	  
+									        }]  
+									    }
+									},0);
 
-						jQuery('.chart-input').off().on('input change',function() {
-							var property	= jQuery(this).data('property');
-							var target		= chart;
-							chart.startDuration = 0;
+									jQuery('.chart-input').off().on('input change',function() {
+										var property	= jQuery(this).data('property');
+										var target		= chart;
+										chart.startDuration = 0;
 
-							if ( property == 'topRadius') {
-								target = chart.graphs[0];
-							}
+										if ( property == 'topRadius') {
+											target = chart.graphs[0];
+										}
 
-							target[property] = this.value;
-							chart.validateNow();
-						});
-						
-					
-			    	
-			 	
-			 	
-			    });
+										target[property] = this.value;
+										chart.validateNow();
+									});
+							 });
+							 
+						 });
+						 
+
+				    });
+				},2000);
+			  
+			  
 		  });
 	});
        
