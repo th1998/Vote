@@ -63,10 +63,10 @@
                             <table class="layui-table layui-form">
                                 <thead>
                                     <tr>
-                                        <th width="2%">
+                                        <th width="4%">
                                             <input type="checkbox"  lay-skin="primary">
                                         </th>
-                                        <th width="12%">选手编号</th>
+                                        <th width="10%">选手编号</th>
                                         <th width="10%">姓名</th>
                                         <th width="5%">性别</th>
                                         <th width="50%">选手简介</th>
@@ -78,7 +78,7 @@
                                 <c:forEach items="${contestants.list}" var="item" varStatus="status">
 									<tr>
 										<th>
-	                                        <input type="checkbox" name="" lay-skin="primary">
+	                                        <input type="checkbox" id="check${status.index}" lay-skin="primary">
 	                                    </th>
 										<th id="con_id${status.index}">${item.con_id }</th>
 										<th id="name${status.index}">${item.name }</th>
@@ -116,6 +116,11 @@
         </div>
     </body>
     <script>
+    layui.use(['laydate','form'], function(){
+        var laydate = layui.laydate;
+        var  form = layui.form;
+        form.render("checkbox");
+	});
     var total="${contestants.total}";
 	var shuliang = 4-(total%4);
 	if(total%4 == 0){
@@ -134,7 +139,7 @@
     		$.get(url,function(data){
     			for(var i = 0;data.con.length;i++){
 	    			tr += "<tr>";
-	    			tr += "<th><input type='checkbox' name='' lay-skin='primary'></th>";
+	    			tr += "<th><input type='checkbox' lay-skin='primary'></th>";
 	    			tr += "<th id='con_id'"+i+">"+data.con[i].con_id+"</th>";
 	    			tr += "<th id='name'"+i+">"+data.con[i].name+"</th>";
 	    			tr += "<th id='sex'"+i+">"+data.con[i].sex+"</th>";
@@ -155,6 +160,12 @@
 	    			      '</th>';
 	            
 	    			layui.jquery("tbody").html(tr);
+	    			
+	    			 layui.use(['laydate','form'], function(){
+	    			        var laydate = layui.laydate;
+	    			        var  form = layui.form;
+	    			        form.render("checkbox");
+	    				});
     			}
     		
     		});
@@ -171,7 +182,7 @@
         	layui.use(['laydate','form'], function(){
                 var laydate = layui.laydate;
                 var  form = layui.form;
-                
+                form.render();
                 layer.confirm('是否删除该参赛者', {icon: 6,timeout:5000},function(index){
                 	var url="${pageContext.request.contextPath}/manager/del_submit";
             		var param={id:id};

@@ -136,6 +136,11 @@
         </div>
     </body>
     <script>
+    layui.use(['form','layer','laydate'], function(){
+    	  var form = layui.form;
+    	  var laydate = layui.laydate;
+    	  form.render();
+    });
     var result=1;
     var total="${pklist.total}";
 	
@@ -186,6 +191,11 @@
   
 	    			layui.jquery("tbody").html(tr);
 	    			$("#bbbb").html(num);
+	    			layui.use(['form','layer','laydate'], function(){
+	    				  var form = layui.form;
+	    				  var laydate = layui.laydate;
+	    				  form.render();
+	    			});
     			}
     		
     		});

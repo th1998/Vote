@@ -232,17 +232,18 @@ scaleH=window.innerHeight/480;
             
         }
     	var voter_ip = returnCitySN["cip"];
-    	console.log(returnCitySN["cip"])
+    	
     	$.ajax({
 		    url: '${pageContext.request.contextPath}/manager/findip?voted_comid='+id+'&voter_ip='+voter_ip,
 		    type:'post',
 		    async: true,
 		    success:function(data){
-		    	if(data = 1){
+		    	console.log(data)
+		    	if(data == 1){
 		    		alert("只能投一次");
 		    	}else{
 		    		$.ajax({
-		    		    url: '${pageContext.request.contextPath}/manager/zan_submit?voted_comid='+id+'&voted_contestantid='+con_id,
+		    		    url: '${pageContext.request.contextPath}/manager/zan_submit?voter_ip='+voter_ip+'&voted_comid='+id+'&voted_contestantid='+con_id,
 		    		    type:'post',
 		    		    async: true,
 		    		    success:function(data){

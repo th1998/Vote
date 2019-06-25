@@ -73,7 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where con_id=#{con_id}
 	</select>
 	<insert id="addVote" parameterType="Model.Vote">
-		insert into vote (voted_comid,voted_contestantid) values(#{voted_comid},#{voted_contestantid})
+		insert into vote (voter_ip,voted_comid,voted_contestantid) values(#{voter_ip},#{voted_comid},#{voted_contestantid})
 	</insert>
 	
 	

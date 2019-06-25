@@ -384,10 +384,11 @@ public class BackstageController {
 		
 		@RequestMapping("/zan_submit")
 		@ResponseBody
-		public ResultMsg zan_submit(Integer voted_comid,Integer voted_contestantid) {
+		public ResultMsg zan_submit(String voter_ip,Integer voted_comid,Integer voted_contestantid) {
 			Vote v = new Vote();
 			v.setVoted_comid(voted_comid);
 			v.setVoted_contestantid(voted_contestantid);
+			v.setVoter_ip(voter_ip);
 			int i =competitionService.addVote(v);
 			if(i>0) {
 				return new ResultMsg(1, "¹§Ï²Äú£¬Í¶Æ±³É¹¦£¡");
