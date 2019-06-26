@@ -32,7 +32,7 @@
 .login .message {
     margin: 10px 0 0 -58px;
     padding: 18px 10px 18px 60px;
-    background: #189F92;
+    background: linear-gradient(to left,rgba(1, 170, 237, 1), rgba(82, 183, 109, 1)) !important;
     position: relative;
     color: #fff;
     font-size: 16px;
