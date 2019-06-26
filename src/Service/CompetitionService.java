@@ -83,4 +83,15 @@ public class CompetitionService {
 	public int findip(Vote vote){
 		return competitionDao.findip(vote);
 	}
+	
+	public int xgzt(Integer id) {
+		return competitionDao.xgzt(id);
+	}
+	
+	public int updateCon1_score(Con_pk pk) {
+		return competitionDao.updateCon1_score(pk);
+	}
+	public int updateCon2_score(Con_pk pk) {
+		return competitionDao.updateCon2_score(pk);
+	}
 }

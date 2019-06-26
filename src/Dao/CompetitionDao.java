@@ -21,4 +21,7 @@ public interface CompetitionDao {
 	int addVote(Vote vote);
 	int getScore(Vote vote);
 	int findip(Vote vote);
+	int xgzt(Integer id);
+	int updateCon1_score(Con_pk pk);
+	int updateCon2_score(Con_pk pk);
 }

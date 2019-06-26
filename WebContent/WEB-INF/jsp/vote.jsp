@@ -19,7 +19,7 @@
 <body>
  
 <div class="swiper-container">
-    <div class="swiper-wrapper">
+      <div class="swiper-wrapper">
     <c:forEach items="${statuspk}" var="item" varStatus="status">
 		
 			<section class="swiper-slide swiper-slide1">
@@ -35,7 +35,8 @@
         				<p>${item.comp.competition_name }</p>
         			</div>
         		    <div class="constants">
-        		    	<div class="constant1">
+        		    <c:if test="${item.comp.vote_type == 1 }">
+        		    <div class="constant1">
         		    		<div class="constant1_intro">
         		    		<p  class="constant1_name">${item.con1_name }</p>
         		    		<p class="music_name" >
@@ -55,14 +56,43 @@
         		    			${item.con2_music }
         		    		</p>
         		    		</div>
-        		    		<div class="zan2 heart" id="${item.comp.id }" con_id="${item.con2_id }"rel="like">
+        		    		<div class="zan2 heart" id="${item.comp.id }" con_id="${item.con2_id }" rel="like">
         		    		</div>
         		    	</div>
-        		        <div class="times">
+        		    </c:if>
+        		    
+        		     <c:if test="${item.comp.vote_type == 0 }">
+        		    <div class="constant1">
+        		    		<div class="constant1_intro">
+        		    		<p  class="constant1_name">${item.con1_name }</p>
+        		    		<p class="music_name" >
+        		    			${item.con1_music }
+        		    		</p>
+        		    		</div>
+        		    		<div class="low"  id="${item.comp.id }" con_id="${item.con2_id }" rel="like">
+        		    		</div>
+        		    	</div>
+        		    	<div class="pk">
+        		    		<p style="font-size:20px;">PK</p>
+        		    	</div>
+        		    	<div class="constant2">
+        		    		<div class="constant2_intro">
+        		    		<p  class="constant2_name">${item.con2_name }</p>
+        		    		<p class="music_name" >
+        		    			${item.con2_music }
+        		    		</p>
+        		    		</div>
+        		    		<div class="low"  id="${item.comp.id }" con_id="${item.con1_id }" rel="like">
+        		    		</div>
+        		    	</div>
+        		    </c:if>
+        		    	
+        		    	
+        		        <div class="times" >
 	        		    	<p>${item.comp.vote_start }</p>
 	        		    	<p>至</p>
 	        		    	<p>${item.comp.vote_end }</p>
-        		    </div>
+        		    	</div>
         		    </div>
         	
         		</div>
@@ -82,53 +112,134 @@
 var url = '${pageContext.request.contextPath}/manager/vote_submit';
 $.post(url, function (res) {
 	for(var i = 0 ;i<res.length;i++){
-		if(res[i].comp.competition_status == 1){
-			$(".swiper-container").append(
-					'<div class="swiper-wrapper">'+
-						'<section class="swiper-slide swiper-slide1">'+
-			        	'<div class="box"> '+ 
-			        		'<div id="head1'+res[i].con1_id+'" style="display:none;">'+res[i].con1_id+'</div>'+ 
-		        			'<div id="head2'+res[i].con2_id+'" style="display:none;">'+res[i].con2_id+'</div> '+ 
-			        		'<div class="pic">'+
-			      				'<div id="pic1'+i+'"></div>'+
-			      				'<div id="pic2'+i+'"></div>'+
-			        		'</div>'+
-			        		'<div class="intro">'+
-			        			'<div class="match_name">'+
-			        				'<p>'+res[i].comp.competition_name+'</p>'+
-			        			'</div>'+
-			        		    '<div class="constants">'+
-			        		    	'<div class="constant1">'+
-			        		    		'<div class="constant1_intro">'+
-			        		    		'<p  class="constant1_name">'+res[i].con1_name+'</p>'+
-			        		    		'<p class="music_name" >'+
-			        		    			''+res[i].con1_music+''+
-			        		    		'</p>'+
-			        		    		'</div>'+
-			        		    		'<div class="zan1 heart"  id="'+res[i].comp.id+'" con_id="'+res[i].con1_id+'" rel="like">'+
-			        		    		'</div>'+
-			        		    	'</div>'+
-			        		    	'<div class="pk">'+
-			        		    		'<p style="font-size:20px;">PK</p>'+
-			        		    	'</div>'+
-			        		    	'<div class="constant2">'+
-			        		    		'<div class="constant2_intro">'+
-			        		    		'<p  class="constant2_name">'+res[i].con2_name+'</p>'+
-			        		    		'<p class="music_name" >'+
-			        		    		''+res[i].con2_music+''+
-			        		    		'</p>'+
-			        		    		'</div>'+
-			        		    		'<div class="zan2 heart" id="'+res[i].comp.id+'" con_id="'+res[i].con2_id+'" rel="like">'+
-			        		    		'</div>'+
-			        		    	'</div>'+
-			        		        '<div class="times">'+
-				        		    	'<p>'+res[i].comp.vote_start+'</p>'+
-				        		    	'<p>至</p>'+
-				        		    	'<p>'+res[i].comp.vote_end+'</p>'+
-			        		    '</div>'+
-			        		    '</div>'+
-			        	
-			        		'</div>')
+		var startTime;
+		var endTime;
+		
+		var data = {
+			startTime: res[i].comp.vote_start,
+			endTime: res[i].comp.vote_end
+		}; //模拟后台返回的数据
+		startTime = new Date(data.startTime);
+		endTime = new Date(data.endTime);
+		
+		var myDate =new Date();
+		
+		if(myDate.getTime()>endTime.getTime()){
+			var id = res[i].competition_id;
+			$.ajax({
+			    url: '${pageContext.request.contextPath}/manager/xgzt?id='+id,
+			    type:'post',
+			    async: true,
+			    success:function(data){
+			    	location.reload();
+			    }
+			 });
+        }else{
+        	if(res[i].comp.vote_type == 1){
+        		console.log("有几个正票"+i)
+        		$(".swiper-container").append(
+    					'<div class="swiper-wrapper">'+
+    						'<section class="swiper-slide swiper-slide1">'+
+    			        	'<div class="box"> '+ 
+    			        		'<div id="head1'+res[i].con1_id+'" style="display:none;">'+res[i].con1_id+'</div>'+ 
+    		        			'<div id="head2'+res[i].con2_id+'" style="display:none;">'+res[i].con2_id+'</div> '+ 
+    			        		'<div class="pic">'+
+    			      				'<div id="pic1'+i+'"></div>'+
+    			      				'<div id="pic2'+i+'"></div>'+
+    			        		'</div>'+
+    			        		'<div class="intro">'+
+    			        			'<div class="match_name">'+
+    			        				'<p>'+res[i].comp.competition_name+'</p>'+
+    			        			'</div>'+
+    			        		    '<div class="constants">'+
+    			        		    	'<div class="constant1">'+
+    			        		    		'<div class="constant1_intro">'+
+    			        		    		'<p  class="constant1_name">'+res[i].con1_name+'</p>'+
+    			        		    		'<p class="music_name" >'+
+    			        		    			''+res[i].con1_music+''+
+    			        		    		'</p>'+
+    			        		    		'</div>'+
+    			        		    		'<div class="zan1 heart"  id="'+res[i].comp.id+'" con_id="'+res[i].con1_id+'" rel="like">'+
+    			        		    		'</div>'+
+    			        		    	'</div>'+
+    			        		    	'<div class="pk">'+
+    			        		    		'<p style="font-size:20px;">PK</p>'+
+    			        		    	'</div>'+
+    			        		    	'<div class="constant2">'+
+    			        		    		'<div class="constant2_intro">'+
+    			        		    		'<p  class="constant2_name">'+res[i].con2_name+'</p>'+
+    			        		    		'<p class="music_name" >'+
+    			        		    		''+res[i].con2_music+''+
+    			        		    		'</p>'+
+    			        		    		'</div>'+
+    			        		    		'<div class="zan2 heart" id="'+res[i].comp.id+'" con_id="'+res[i].con2_id+'" rel="like">'+
+    			        		    		'</div>'+
+    			        		    	'</div>'+
+    			        		        '<div class="times">'+
+    			        		        '<p>'+res[i].comp.vote_start+'</p>'+
+    			        		    	'<p>至</p>'+
+    			        		    	'<p>'+res[i].comp.vote_end+'</p>'+
+    			        		    '</div>'+
+    			        		    '</div>'+
+    			        	
+    			        		'</div>')
+        	}else{
+        		console.log("测试："+i)
+        		$(".swiper-container").append(
+    					'<div class="swiper-wrapper">'+
+    						'<section class="swiper-slide swiper-slide1">'+
+    			        	'<div class="box"> '+ 
+    			        		'<div id="head1'+res[i].con1_id+'" style="display:none;">'+res[i].con1_id+'</div>'+ 
+    		        			'<div id="head2'+res[i].con2_id+'" style="display:none;">'+res[i].con2_id+'</div> '+ 
+    			        		'<div class="pic">'+
+    			      				'<div id="pic1'+i+'"></div>'+
+    			      				'<div id="pic2'+i+'"></div>'+
+    			        		'</div>'+
+    			        		'<div class="intro">'+
+    			        			'<div class="match_name">'+
+    			        				'<p>'+res[i].comp.competition_name+'</p>'+
+    			        			'</div>'+
+    			        		    '<div class="constants">'+
+    			        		    	'<div class="constant1">'+
+    			        		    		'<div class="constant1_intro">'+
+    			        		    		'<p  class="constant1_name">'+res[i].con1_name+'</p>'+
+    			        		    		'<p class="music_name" >'+
+    			        		    			''+res[i].con1_music+''+
+    			        		    		'</p>'+
+    			        		    		'</div>'+
+    			        		    		'<div class="low"  id="'+res[i].comp.id+'" con_id="'+res[i].con2_id+'" rel="like">'+
+    			        		    		'</div>'+
+    			        		    	'</div>'+
+    			        		    	'<div class="pk">'+
+    			        		    		'<p style="font-size:20px;">PK</p>'+
+    			        		    	'</div>'+
+    			        		    	'<div class="constant2">'+
+    			        		    		'<div class="constant2_intro">'+
+    			        		    		'<p  class="constant2_name">'+res[i].con2_name+'</p>'+
+    			        		    		'<p class="music_name" >'+
+    			        		    		''+res[i].con2_music+''+
+    			        		    		'</p>'+
+    			        		    		'</div>'+
+    			        		    		'<div class="low" id="'+res[i].comp.id+'" con_id="'+res[i].con1_id+'" rel="like">'+
+    			        		    		'</div>'+
+    			        		    	'</div>'+
+    			        		        '<div class="times">'+
+    			        		        '<p>'+res[i].comp.vote_start+'</p>'+
+    			        		    	'<p>至</p>'+
+    			        		    	'<p>'+res[i].comp.vote_end+'</p>'+
+    			        		    '</div>'+
+    			        		    '</div>'+
+    			        	
+    			        		'</div>')
+        	}
+        	
+        }
+        	
+        
+			
+			/*--------------------------------*/
+			
+		    /*--------------------------------------------*/
 			var a = $("#head1"+res[i].con1_id).html();
 			var b = $("#head2"+res[i].con2_id).html();
 			
@@ -156,11 +267,15 @@ $.post(url, function (res) {
 			
 			        		
 			        	
-		}
+	
 	}
 	
 	
 });
+
+
+
+
 
 </script>
 
@@ -231,6 +346,7 @@ scaleH=window.innerHeight/480;
             $(this).addClass("heartAnimation").attr("rel","unlike");
             
         }
+    	
     	var voter_ip = returnCitySN["cip"];
     	
     	$.ajax({
@@ -256,6 +372,47 @@ scaleH=window.innerHeight/480;
     	
        	
     });
+	
+	$('.low').on("click",function(){   	
+		      
+		        if($(this).hasClass("low_hover")){
+		            $(this).removeClass("low_hover");
+		           
+		        }
+		        else{
+		            $(".low").each(function () {
+		            	$(this).addClass("low").attr("rel","like");
+		                $(this).removeClass("low_hover");
+		                
+		            })          
+		            $(this).addClass("low_hover").attr("rel","unlike");
+		        }
+		          var con_id=$(this).attr("con_id");
+		          var id=$(this).attr("id");
+		          
+		          var voter_ip = returnCitySN["cip"];
+		      	
+		      	$.ajax({
+		  		    url: '${pageContext.request.contextPath}/manager/findip?voted_comid='+id+'&voter_ip='+voter_ip,
+		  		    type:'post',
+		  		    async: true,
+		  		    success:function(data){
+		  		    	console.log(data)
+		  		    	if(data == 1){
+		  		    		alert("只能投一次");
+		  		    	}else{
+		  		    		$.ajax({
+		  		    		    url: '${pageContext.request.contextPath}/manager/zan_submit?voter_ip='+voter_ip+'&voted_comid='+id+'&voted_contestantid='+con_id,
+		  		    		    type:'post',
+		  		    		    async: true,
+		  		    		    success:function(data){
+		  		    		    	
+		  		    		    }
+		  		    		 });
+		  		    	}
+		  		    }
+		  		 });
+	});
 	</script>
  
 </body>

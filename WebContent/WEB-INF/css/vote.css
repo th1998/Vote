@@ -134,6 +134,28 @@ opacity: 1;
 	position: absolute;
 	top: 30px;
 }
+.low{
+  background:url(../images/fandui1.png);
+  background-repeat:no-repeat;
+  background-size:40px;
+  height:30px;
+  width:36px;
+  cursor:pointer;
+  position: absolute;
+  top: 60px;
+  left: 55px;
+}
+.low_hover{
+  background: url(../images/fandui2.png);
+  background-repeat:no-repeat;
+  background-size:40px;
+  height:30px;
+  width:36px;
+  cursor:pointer;
+  position: absolute;
+  top: 60px;
+  left: 55px;
+}
 /*.zan1 img,.zan2 img{
 	border: none;
 	cursor: pointer;

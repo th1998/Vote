@@ -211,12 +211,14 @@
 		}else{
 			$("#"+id).attr("sta",1);
 		} 
+		console.log(result);
 		var competition_status=$("#"+id).attr("sta");
 		var url="${pageContext.request.contextPath}/manager/updateStatus";
         var param={id:id,competition_status:competition_status};
+        
         $.get(url,param,function(data){
         	if(data.flag == 1){
-        		var url="${pageContext.request.contextPath}/manager/pk_information2?pageSize=2";
+        		var url="${pageContext.request.contextPath}/manager/pk_information2?pageSize="+result;
         		console.log(url)
             	var tr = "";
         		$.get(url,function(data){

@@ -182,8 +182,24 @@
 						 var rr = '${pageContext.request.contextPath}/manager/getScore?voted_contestantid='+res[0].con1_id+'&voted_comid='+res[0].id;
 						 $.post(rr, function (data) {
 							 console.log("wo:"+data)
+							 $.ajax({
+				    		    url: '${pageContext.request.contextPath}/manager/updateCon1_score?con1_id='+res[0].con1_id+'&id='+res[0].id+'&con1_score='+data,
+				    		    type:'post',
+				    		    async: true,
+				    		    success:function(res){
+				    		    	
+				    		    }
+				    		 });
 							 var rr2 = '${pageContext.request.contextPath}/manager/getScore?voted_contestantid='+res[0].con2_id+'&voted_comid='+res[0].id;
 							 $.post(rr2, function (data2) {
+								 $.ajax({
+						    		    url: '${pageContext.request.contextPath}/manager/updateCon2_score?con2_id='+res[0].con2_id+'&id='+res[0].id+'&con2_score='+data2,
+						    		    type:'post',
+						    		    async: true,
+						    		    success:function(res){
+						    		    	
+						    		    }
+						    		 });
 								 console.log("wo2:"+data2)
 								 var chart = AmCharts.makeChart("chartdiv", {
 									    "theme": "none",

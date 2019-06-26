@@ -89,4 +89,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where voted_comid = #{voted_comid}
 		and voter_ip = #{voter_ip}
 	</select>
+	
+	<update id="xgzt" parameterType="int">
+		update competition
+		set competition_status = 0
+		where id=#{id}
+	</update>
+	
+	<update id="updateCon1_score" parameterType="Model.Con_pk">
+		update con_pk
+		set con1_score = #{con1_score}
+		where id = #{id}
+		and con1_id = #{con1_id}
+	</update>
+	<update id="updateCon2_score" parameterType="Model.Con_pk">
+		update con_pk
+		set con2_score = #{con2_score}
+		where id = #{id}
+		and con2_id = #{con2_id}
+	</update>
 </mapper>

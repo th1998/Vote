@@ -418,5 +418,31 @@ public class BackstageController {
 			int ip = competitionService.findip(v);
 			return ip;
 		}
-	
+		
+		@RequestMapping("/xgzt")
+		@ResponseBody
+		public int xgzt(Integer id) {
+			int i = competitionService.xgzt(id);
+			return i;
+		}
+		@RequestMapping("/updateCon1_score")
+		@ResponseBody
+		public int updateCon1_score(Con_pk pk) {
+			Con_pk p = new Con_pk();
+			p.setCon1_id(pk.getCon1_id());
+			p.setId(pk.getId());
+			p.setCon1_score(pk.getCon1_score());
+			int i = competitionService.updateCon1_score(p);
+			return i;
+		}
+		@RequestMapping("/updateCon2_score")
+		@ResponseBody
+		public int updateCon2_score(Con_pk pk) {
+			Con_pk p = new Con_pk();
+			p.setCon2_id(pk.getCon2_id());
+			p.setId(pk.getId());
+			p.setCon2_score(pk.getCon2_score());
+			int i = competitionService.updateCon2_score(p);
+			return i;
+		}
 }
