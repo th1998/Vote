@@ -402,7 +402,10 @@ scaleH=window.innerHeight/480;
 		  		    success:function(data){
 		  		    	console.log(data)
 		  		    	if(data == 1){
-		  		    		alert("只能投一次");
+		  		    		layui.use('form', function(){
+				    			  var form = layui.form;
+				    			  layer.alert("每场比赛只能投一票！", {icon: 2});
+				    		});
 		  		    	}else{
 		  		    		$.ajax({
 		  		    		    url: '${pageContext.request.contextPath}/manager/zan_submit?voter_ip='+voter_ip+'&voted_comid='+id+'&voted_contestantid='+con_id,

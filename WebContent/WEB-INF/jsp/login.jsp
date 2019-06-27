@@ -52,7 +52,7 @@
                         }
                     });
                 
-                	window.location.href = document.referrer;
+                	//window.location.href = document.referrer;
               });
             });
         })
