@@ -94,4 +94,14 @@ public class CompetitionService {
 	public int updateCon2_score(Con_pk pk) {
 		return competitionDao.updateCon2_score(pk);
 	}
+	
+	public int getNum1() {
+		return competitionDao.getNum1();
+	}
+	public int getNum2() {
+		return competitionDao.getNum2();
+	}
+	public int getNum3() {
+		return competitionDao.getNum3();
+	}
 }

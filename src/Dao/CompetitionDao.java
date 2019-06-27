@@ -24,4 +24,8 @@ public interface CompetitionDao {
 	int xgzt(Integer id);
 	int updateCon1_score(Con_pk pk);
 	int updateCon2_score(Con_pk pk);
+	
+	int getNum1();
+	int getNum2();
+	int getNum3();
 }

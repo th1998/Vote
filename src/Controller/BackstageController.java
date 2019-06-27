@@ -445,4 +445,25 @@ public class BackstageController {
 			int i = competitionService.updateCon2_score(p);
 			return i;
 		}
+		
+		@RequestMapping("/getNum1")
+		@ResponseBody
+		public int getNum1() {
+			int i = competitionService.getNum1();
+			return i;
+		}
+		
+		@RequestMapping("/getNum2")
+		@ResponseBody
+		public int getNum2() {
+			int i = competitionService.getNum2();
+			return i;
+		}
+		@RequestMapping("/getNum3")
+		@ResponseBody
+		public int getNum3() {
+			int i = competitionService.getNum3();
+			return i;
+		}
+		
 }

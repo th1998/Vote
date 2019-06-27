@@ -108,4 +108,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where id = #{id}
 		and con2_id = #{con2_id}
 	</update>
+	
+	<!-- 统计参赛人员数，比赛主题数，比赛信息数 -->
+	<select id="getNum1" resultType="int">
+		select COUNT(*) from contestants
+	</select>
+	<select id="getNum2" resultType="int">
+		select COUNT(*) from competition
+	</select>
+	<select id="getNum3" resultType="int">
+		select COUNT(*) from con_pk
+	</select>
 </mapper>

@@ -141,29 +141,27 @@ layui.use(['form','layer','laydate'], function(){
 
   
 	//表单验证
-	 form.verify({
-		 introduce: function(value){
-			  if(value.length > 200){
-				return '选手介绍必须少于200字！';
-			  }
-		}
-	 });
-  //异步提交表单
-  form.on('submit(entry)', function(data){
-     var url = '${pageContext.request.contextPath}/manager/pk_information_submit';
-     var param = $(".layui-form").serialize();
+	 
+		//异步提交表单
+		  form.on('submit(entry)', function(data){
+			  
+					 var url = '${pageContext.request.contextPath}/manager/pk_information_submit';
+				     var param = $(".layui-form").serialize();
+					
+				     $.post(url, param, function (res) {
+				        if(res.flag == 1){
+				        	
+				        	layer.msg(res.content, {icon: 1});
+				        	location.href="${pageContext.request.contextPath}/manager/pk_information";
+				        }else{
+				        	layer.alert(res.content, {icon: 2});
+				        }
+				         
+				     });
+
+		    });
 	
-     $.post(url, param, function (res) {
-        if(res.flag == 1){
-        	
-        	layer.msg(res.content, {icon: 1});
-        	location.href="${pageContext.request.contextPath}/manager/pk_information";
-        }else{
-        	layer.alert(res.content, {icon: 2});
-        }
-         
-     });
-    });
+  
   
 
  
