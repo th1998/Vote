@@ -94,6 +94,7 @@ layui.use(['form','layer'], function(){
      $.post(url, param, function (data) {
         if(data.flag == 1){
         	layer.msg(data.content, {icon: 1});
+        	
         	location.href="${pageContext.request.contextPath}/manager/participant_list";
 			$(".layui-input").val("");
 			$("#introduce").val("");

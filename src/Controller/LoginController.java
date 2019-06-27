@@ -38,9 +38,11 @@ public class LoginController {
 		request.getSession().setAttribute("username", m.getUsername());
 		islogin = loginService.execute(m.getUsername(), m.getPassword());
 		if(islogin) {
-			return new ResultMsg(1,"µÇÂ¼³É¹¦");
+			//ModelAndView mv = new ModelAndView("/index");
+			return new ResultMsg(1,"³É¹¦");
 		}else {
-			return new ResultMsg(2,"µÇÂ¼Ê§°Ü");
+			//ModelAndView mv = new ModelAndView("/login");
+			return new ResultMsg(0,"Ê§°Ü");
 		}	
 	}
 	
