@@ -13,6 +13,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.4.0.min.js" ></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/dist/js/swiper.min.js" ></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/swiper.animate.min.js" ></script>
+<script src="${pageContext.request.contextPath}/lib/layui/layui.js" charset="utf-8"></script>
 <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script> 
 <title>投票</title>
 </head>
@@ -356,7 +357,10 @@ scaleH=window.innerHeight/480;
 		    success:function(data){
 		    	console.log(data)
 		    	if(data == 1){
-		    		alert("只能投一次");
+		    		layui.use('form', function(){
+		    			  var form = layui.form;
+		    			  layer.alert("每场比赛只能投一票！", {icon: 2});
+		    		});
 		    	}else{
 		    		$.ajax({
 		    		    url: '${pageContext.request.contextPath}/manager/zan_submit?voter_ip='+voter_ip+'&voted_comid='+id+'&voted_contestantid='+con_id,
