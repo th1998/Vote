@@ -144,8 +144,12 @@ layui.use(['form','layer','laydate'], function(){
 	 
 		//异步提交表单
 		  form.on('submit(entry)', function(data){
-			  
-					 var url = '${pageContext.request.contextPath}/manager/pk_information_submit';
+			  var con1_id = $('#con1_id').val();
+			  var con2_id = $('#con2_id').val();
+			  if(con1_id == con2_id){
+				  layer.alert("参赛选手不能为同一个人", {icon: 2});
+			  }else{
+				  var url = '${pageContext.request.contextPath}/manager/pk_information_submit';
 				     var param = $(".layui-form").serialize();
 					
 				     $.post(url, param, function (res) {
@@ -157,7 +161,9 @@ layui.use(['form','layer','laydate'], function(){
 				        	layer.alert(res.content, {icon: 2});
 				        }
 				         
-				     });
+				     });  
+			  }
+					
 
 		    });
 	
