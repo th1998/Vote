@@ -194,7 +194,7 @@ $.post(url, function (res) {
     		        			'<div id="head2'+res[i].con2_id+'" style="display:none;">'+res[i].con2_id+'</div> '+ 
     			        		'<div class="pic">'+
     			      				'<div id="pic1'+i+'"></div>'+
-    			      				'<div id="pic2'+i+'"></div>'+
+    			      				'<div id="pic2'+i+'" class="pic2"></div>'+
     			        		'</div>'+
     			        		'<div class="intro">'+
     			        			'<div class="match_name">'+
@@ -251,7 +251,7 @@ $.post(url, function (res) {
 			    type:'post',
 			    async: false,
 			    success:function(res2){
-					$("#pic1"+i).html('<img src="${pageContext.request.contextPath}/upload/'+res2[0].picture+'" width="180" height="300">');   
+					$("#pic1"+i).html('<img src="${pageContext.request.contextPath}/upload/'+res2[0].picture+'" width="100%" height="100%">');   
 			    }
 			 });
 			
@@ -260,7 +260,7 @@ $.post(url, function (res) {
 			    type:'post',
 			    async: false,
 			    success:function(res3){
-					$("#pic2"+i).html('<img src="${pageContext.request.contextPath}/upload/'+res3[0].picture+'" width="180" height="300">');  
+					$("#pic2"+i).html('<img src="${pageContext.request.contextPath}/upload/'+res3[0].picture+'" width="100%" height="100%">');  
 			       }
 			 });
 
@@ -270,7 +270,6 @@ $.post(url, function (res) {
 			        	
 	
 	}
-	
 	
 });
 
