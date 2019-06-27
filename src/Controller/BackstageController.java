@@ -355,22 +355,7 @@ public class BackstageController {
 			ModelAndView mv =new ModelAndView("/vote");
 			mv.addObject("pk",pk);
 			mv.addObject("statuspk",statuspk);
-			/*List<Integer> pk_num= new ArrayList<Integer>();
-			System.out.println(pk.size());
-			for(int j =0;j<pk.size();j++) {
-				if(pk.get(j).getComp().getCompetition_status() == 1) {					
-							pk_num.add(pk.get(j).getCon1_id());
-							pk_num.add(pk.get(j).getCon2_id());
-											
-				}
-			}
-			List<String> pic= new ArrayList<String>();
-			for(int i=0;i<pk_num.size();i++) {
-				String headlist = competitionService.findHead2(pk_num.get(i));
-				pic.add(headlist);
-			}
-			System.out.println(pic);
-			mv.addObject("pic",pic);*/
+			
 			return mv;
 		}
 		

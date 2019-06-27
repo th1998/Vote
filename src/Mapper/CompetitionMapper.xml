@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getPlayerID" resultType="Model.Contestants">
-		select * from contestants
+		select * from contestants order by id desc
 	</select>
 	
 	<insert id="addConpk" parameterType="Model.Con_pk">
